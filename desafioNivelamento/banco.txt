@@ -1,0 +1,13 @@
+Sqlite3 lojas.db
+
+CREATE TABLE loja(
+id int NOT NULL,
+name varchar(80) NOT NULL,
+address: varchar(80) NOT NULL,
+phone: varchar(10) NOT NULL,
+cnpj: varchar(14) NOT NULL,
+workingHour: varchar(80) NOT NULL,
+city: varchar(80) NOT NULL,
+state: varchar(2) NOT NULL,
+PRIMARY KEY(Id)
+);
