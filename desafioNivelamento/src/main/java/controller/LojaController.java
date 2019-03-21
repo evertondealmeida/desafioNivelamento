@@ -13,19 +13,9 @@ import persistence.Conexao;
 import service.LojaService;
 import service.Service;
 
+
 public class LojaController {
 	public static void main(String[] args) throws Exception {
-		/*// get("/hello", (req, res) -> "Hello World");
-		CidadeDAO dao = new CidadeDAO();
-		Cidade cidade = dao.obter(4315602);
-
-		System.out.println("Nome:" + cidade.getNome());
-
-		List<Cidade> vetCidade = dao.listarCidades(43, "");
-		for (int i = 0; i < vetCidade.size(); i++) {
-			Cidade aux = vetCidade.get(i);
-			System.out.println("Nome:" + aux.getNome());
-		}*/
 		final Service LojaService = new LojaService();
 
         post("/Lojas", (request, response) -> {
@@ -76,4 +66,6 @@ public class LojaController {
         });
 
     }
+
+	
 }
