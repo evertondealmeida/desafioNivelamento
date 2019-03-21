@@ -1,4 +1,4 @@
-package persistencia;
+package persistence;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,28 +7,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import modelo.Cidade;
-import modelo.Loja;
+import model.Cidade;
+import model.Loja;
 
 public class LojaDAO {
 
 	public List<Loja> listarTodasLojas() throws SQLException {
 		List<Loja> vetLoja = new ArrayList();
 		Connection connection = new Conexao().getConexao();
-		String sql = "SELECT * FROM Loja";
+		String sql = "SELECT * FROM loja";
 		PreparedStatement sqlSelect = connection.prepareStatement(sql);
 		ResultSet rs = sqlSelect.executeQuery();
-		Loja Loja;
-		while (rs.next()) {
-			Loja = new Loja();
-			Loja.setId(rs.getInt("id"));
-			Loja.setNome(rs.getString("nome"));
-			Loja.setEndereco(rs.getString("endereco"));
-			Loja.setTelefone(rs.getString("telefone"));
-			Loja.setCnpj(rs.getString("cnpj"));
-			Loja.setHorarioAtendimento(rs.getString("horarioAtendimento"));
-			Loja.setId(rs.getInt("codigoLoja"));
-			vetLoja.add(Loja);
+		Loja loja;
+		while(rs.next()) {
+			loja = new Loja();
+			loja.setId(rs.getInt("id"));
+			loja.setNome(rs.getString("nome"));
+			loja.setEndereco(rs.getString("endereco"));
+			loja.setTelefone(rs.getString("telefone"));
+			loja.setCnpj(rs.getString("cnpj"));
+			loja.setHorarioAtendimento(rs.getString("horarioAtendimento"));
+			loja.setCodigoCidade(rs.getInt("codigoCidade"));
+			vetLoja.add(loja);
 		}
 		sqlSelect.close();
 		connection.close();
@@ -46,7 +46,7 @@ public class LojaDAO {
 		sqlSelect.setInt(2, codigoCidade > 0 ? codigoCidade : null);
 		ResultSet rs = sqlSelect.executeQuery();
 		Loja Loja;
-		while (rs.next()) {
+		while(rs.next()) {
 			Loja = new Loja();
 			Loja.setId(rs.getInt("id"));
 			Loja.setNome(rs.getString("nome"));
@@ -66,12 +66,12 @@ public class LojaDAO {
 		Connection connection = new Conexao().getConexao();
 		String sql = "INSERT INTO loja VALUES(?,?,?,?,?,?,?)";
 		PreparedStatement sqlInsert = connection.prepareStatement(sql);
-		sqlInsert.setString(1, Loja.getNome());
-		sqlInsert.setString(2, Loja.getEndereco());
-		sqlInsert.setString(3, Loja.getTelefone());
-		sqlInsert.setString(4, Loja.getCnpj());
-		sqlInsert.setString(5, Loja.getHorarioAtendimento());
-		sqlInsert.setString(6, Loja.getNome());
+		sqlInsert.setString(1,"'"+ Loja.getNome()+"'");
+		sqlInsert.setString(2,"'"+ Loja.getEndereco()+"'");
+		sqlInsert.setString(3,"'"+ Loja.getTelefone()+"'");
+		sqlInsert.setString(4,"'"+ Loja.getCnpj()+"'");
+		sqlInsert.setString(5,"'"+ Loja.getHorarioAtendimento()+"'");
+		sqlInsert.setString(6,"'"+ Loja.getNome()+"'");
 		sqlInsert.setInt(7, Loja.getCodigoCidade());
 		sqlInsert.executeUpdate();
 		sqlInsert.close();

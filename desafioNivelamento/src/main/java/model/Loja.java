@@ -1,4 +1,4 @@
-package modelo;
+package model;
 
 public class Loja {
 	private int id;
@@ -8,6 +8,35 @@ public class Loja {
 	private String cnpj;
 	private String horarioAtendimento;
 	private int codigoCidade;
+	
+	
+	public Loja() {
+		super();
+	}
+
+
+
+	public Loja(int id, String nome, String endereco, String telefone, String cnpj, String horarioAtendimento,
+			int codigoCidade) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.endereco = endereco;
+		this.telefone = telefone;
+		this.cnpj = cnpj;
+		this.horarioAtendimento = horarioAtendimento;
+		this.codigoCidade = codigoCidade;
+	}
+	
+	
+
+	@Override
+	public String toString() {
+		return "Loja [id=" + id + ", nome=" + nome + ", endereco=" + endereco + ", telefone=" + telefone + ", cnpj="
+				+ cnpj + ", horarioAtendimento=" + horarioAtendimento + ", codigoCidade=" + codigoCidade + "]";
+	}
+
+
 
 	public int getId() {
 		return id;

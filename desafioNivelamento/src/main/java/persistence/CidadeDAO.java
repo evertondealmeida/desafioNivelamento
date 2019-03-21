@@ -1,4 +1,4 @@
-package persistencia;
+package persistence;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,7 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import modelo.Cidade;
+
+import model.Cidade;
 
 public class CidadeDAO {
 	
@@ -26,7 +27,6 @@ public class CidadeDAO {
         }
         sqlSelect.close();
         connection.close();
-        System.out.print("");
         return null;
     }
 	public List<Cidade> listarCidades(int codigoEstado,String nomeCidade) throws SQLException{
