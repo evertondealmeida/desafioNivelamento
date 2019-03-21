@@ -26,6 +26,7 @@ public class CidadeDAO {
         }
         sqlSelect.close();
         connection.close();
+        System.out.print("");
         return null;
     }
 	public List<Cidade> listarCidades(int codigoEstado,String nomeCidade) throws SQLException{
