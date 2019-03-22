@@ -64,15 +64,14 @@ public class LojaDAO {
 
 	public void inserir(Loja Loja) throws SQLException {
 		Connection connection = new Conexao().getConexao();
-		String sql = "INSERT INTO loja VALUES(?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO loja VALUES(null,?,?,?,?,?,?)";
 		PreparedStatement sqlInsert = connection.prepareStatement(sql);
 		sqlInsert.setString(1,"'"+ Loja.getNome()+"'");
 		sqlInsert.setString(2,"'"+ Loja.getEndereco()+"'");
 		sqlInsert.setString(3,"'"+ Loja.getTelefone()+"'");
 		sqlInsert.setString(4,"'"+ Loja.getCnpj()+"'");
 		sqlInsert.setString(5,"'"+ Loja.getHorarioAtendimento()+"'");
-		sqlInsert.setString(6,"'"+ Loja.getNome()+"'");
-		sqlInsert.setInt(7, Loja.getCodigoCidade());
+		sqlInsert.setInt(6, Loja.getCodigoCidade());
 		sqlInsert.executeUpdate();
 		sqlInsert.close();
 		connection.close();
@@ -93,14 +92,13 @@ public class LojaDAO {
 		String sql = "UPDATE loja SET nome = ?, endereco = ?,telefone = ?, cnpj = ?, horarioAtendimento = ?, codigoCidade = ? WHERE id = ?";
 
 		PreparedStatement sqlInsert = connection.prepareStatement(sql);
-		sqlInsert.setString(1, Loja.getNome());
-		sqlInsert.setString(2, Loja.getEndereco());
-		sqlInsert.setString(3, Loja.getTelefone());
-		sqlInsert.setString(4, Loja.getCnpj());
-		sqlInsert.setString(5, Loja.getHorarioAtendimento());
-		sqlInsert.setString(6, Loja.getNome());
-		sqlInsert.setInt(7, Loja.getCodigoCidade());
-		sqlInsert.setInt(8, Loja.getId());
+		sqlInsert.setString(1,"'"+ Loja.getNome()+"'");
+		sqlInsert.setString(2,"'"+ Loja.getEndereco()+"'");
+		sqlInsert.setString(3,"'"+ Loja.getTelefone()+"'");
+		sqlInsert.setString(4,"'"+ Loja.getCnpj()+"'");
+		sqlInsert.setString(5,"'"+ Loja.getHorarioAtendimento()+"'");
+		sqlInsert.setInt(6, Loja.getCodigoCidade());
+		sqlInsert.setInt(7, Loja.getId());
 		sqlInsert.executeUpdate();
 		sqlInsert.close();
 		connection.close();

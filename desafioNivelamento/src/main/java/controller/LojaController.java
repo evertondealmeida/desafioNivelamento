@@ -43,13 +43,9 @@ public class LojaController {
             response.type("application/json");
 
             Loja toEdit = new Gson().fromJson(request.body(), Loja.class);
-            Loja editedLoja = LojaService.atualizarLoja(toEdit);
-
-            if (editedLoja != null) {
-                return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, new Gson().toJsonTree(editedLoja)));
-            } else {
-                return new Gson().toJson(new StandardResponse(StatusResponse.ERROR, new Gson().toJson("Loja not found or error in edit")));
-            }
+            Loja loja = LojaService.atualizarLoja(toEdit);
+            return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS));
+ 
         });
 
         delete("/Lojas/:id", (request, response) -> {
