@@ -10,13 +10,16 @@ import model.Cidade;
 import model.Loja;
 import persistence.CidadeDAO;
 import persistence.Conexao;
+import service.CidadeService;
+import service.EstadoService;
 import service.LojaService;
-import service.Service;
 
 
 public class LojaController {
 	public static void main(String[] args) throws Exception {
-		final Service LojaService = new LojaService();
+		final LojaService LojaService = new LojaService();
+		final EstadoService EstadoService = new EstadoService();
+		final CidadeService CidadeService = new CidadeService();
 
         post("/Lojas", (request, response) -> {
             response.type("application/json");
@@ -29,8 +32,23 @@ public class LojaController {
 
         get("/Lojas", (request, response) -> {
             response.type("application/json");
+            response.header("Access-Control-Allow-Origin", "*");
+            response.header("Access-Control-Request-Method", "*");
+            response.header("Access-Control-Allow-Headers", "*");
 
             return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, new Gson().toJsonTree(LojaService.listarLojas())));
+        });
+        
+        get("/Estados", (request, response) -> {
+            response.type("application/json");
+
+            return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, new Gson().toJsonTree(EstadoService.listarEstados())));
+        });
+        
+        get("/Cidades", (request, response) -> {
+            response.type("application/json");
+
+            return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, new Gson().toJsonTree(CidadeService.listarCidades())));
         });
 
         get("/Lojas/:id", (request, response) -> {
