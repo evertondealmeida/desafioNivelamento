@@ -15,7 +15,7 @@ public class LojaDAO {
 	public List<Loja> listarLojas(int codigoEstado, int codigoCidade) throws SQLException {
 		List<Loja> vetLoja = new ArrayList();
 		Connection connection = new Conexao().getConexao();
-		String filtro = codigoCidade > 0 ? "estado.codigo = ?" : "estado.codigo > ?";
+		String filtro = codigoEstado > 0 ? "estado.codigo = ?" : "estado.codigo > ?";
 		 filtro += codigoCidade > 0 ? "and cidade.codigo = ?" : "and cidade.codigo > ?";
 		String sql = "SELECT loja.* FROM loja \r\n" 
 		        + "INNER JOIN cidade ON loja.codigoCidade = cidade.codigo\r\n"
@@ -34,7 +34,7 @@ public class LojaDAO {
 			Loja.setTelefone(rs.getString("telefone"));
 			Loja.setCnpj(rs.getString("cnpj"));
 			Loja.setHorarioAtendimento(rs.getString("horarioAtendimento"));
-			Loja.setId(rs.getInt("codigoCidade"));
+			Loja.setCodigoCidade(rs.getInt("codigoCidade"));
 			vetLoja.add(Loja);
 		}
 		sqlSelect.close();

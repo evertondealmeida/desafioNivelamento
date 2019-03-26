@@ -29,14 +29,27 @@ public class LojaController {
 
             return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS));
         });
-
-        get("/Lojas/:cidade/:estado", (request, response) -> {
+        get("/Lojas", (request, response) -> {
             response.type("application/json");
             response.header("Access-Control-Allow-Origin", "*");
             response.header("Access-Control-Request-Method", "*");
             response.header("Access-Control-Allow-Headers", "*");
-        
-            return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, new Gson().toJsonTree(LojaService.listarLojas(request.params("estado"),request.params("cidade")))));
+            return null;
+        });
+        get("/Lojas/Cidades/:id", (request, response) -> {   	
+            response.type("application/json");
+            response.header("Access-Control-Allow-Origin", "*");
+            response.header("Access-Control-Request-Method", "*");
+            response.header("Access-Control-Allow-Headers", "*");
+            return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, new Gson().toJsonTree(CidadeService.listarCidade(request.params(":id")))));
+        });
+
+        get("/Lojas/Procurar/:estado/:cidade", (request, response) -> {
+            response.type("application/json");
+            response.header("Access-Control-Allow-Origin", "*");
+            response.header("Access-Control-Request-Method", "*");
+            response.header("Access-Control-Allow-Headers", "*");
+            return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, new Gson().toJsonTree(LojaService.listarLojas(request.params(":estado"),request.params(":cidade")))));
         });
         
         get("/Lojas/Estados", (request, response) -> {
@@ -47,13 +60,7 @@ public class LojaController {
             return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, new Gson().toJsonTree(EstadoService.listarEstados())));
         });
         
-        get("/Lojas/Cidades/:id", (request, response) -> {
-            response.type("application/json");
-            response.header("Access-Control-Allow-Origin", "*");
-            response.header("Access-Control-Request-Method", "*");
-            response.header("Access-Control-Allow-Headers", "*");
-            return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, new Gson().toJsonTree(CidadeService.listarCidade(request.params(":id")))));
-        });
+        
         
         get("/Lojas/:id", (request, response) -> {
             response.type("application/json");
