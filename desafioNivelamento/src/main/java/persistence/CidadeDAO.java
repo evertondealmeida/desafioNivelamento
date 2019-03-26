@@ -30,15 +30,15 @@ public class CidadeDAO {
         connection.close();
         return null;
     }
-	public List<Cidade> listarCidade() throws SQLException {
+	public List<Cidade> listarCidade(int cdEstado) throws SQLException {
 		List<Cidade> vetCidade = new ArrayList();
 		Connection connection = new Conexao().getConexao();
-		String sql = "SELECT * FROM cidade";
+		String sql = "SELECT * FROM cidade WHERE codigoEstado = ? ORDER BY nome ASC";
 		PreparedStatement sqlSelect = connection.prepareStatement(sql);
+		sqlSelect.setInt(1, cdEstado);
 		ResultSet rs = sqlSelect.executeQuery();
-		Cidade cidade;
 		 while (rs.next()){
-	        	cidade = new Cidade(); 
+			    Cidade cidade = new Cidade(); 
 	            cidade.setCodigo(rs.getInt("codigo"));
 	            cidade.setNome(rs.getString("nome")); 
 	            cidade.setCodigoEstado(rs.getInt("codigoEstado"));
@@ -48,7 +48,7 @@ public class CidadeDAO {
 	        connection.close();
 	        return vetCidade;
 	}
-	public List<Cidade> listarCidades(int codigoEstado,String nomeCidade) throws SQLException{
+	public List<Cidade> listarCidades2(int codigoEstado,String nomeCidade) throws SQLException{
         List<Cidade> vetCidade = new ArrayList();
         Connection connection =  new Conexao().getConexao();       
         String sql = "SELECT * FROM cidade WHERE codigoEstado = ? and nome Like ?";
