@@ -1,3 +1,0 @@
-Para Rodar o localhost abrir um terminal no visual code,
-CTRL+SHIFT+'
-escrever npm run start
