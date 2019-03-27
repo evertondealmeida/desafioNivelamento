@@ -17,7 +17,6 @@ public class CidadeService {
 	public CidadeService() {
 		CidadeMap = new HashMap<>();
 	}
-
 	public Collection<Cidade> listarCidade(String codigo) {
 		CidadeMap.clear();
 		try {
@@ -28,7 +27,6 @@ public class CidadeService {
 				CidadeMap.put(Integer.toString(aux.getCodigo()), aux);
 			}					
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return CidadeMap.values();		

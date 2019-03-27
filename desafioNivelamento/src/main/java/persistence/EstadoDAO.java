@@ -14,7 +14,7 @@ public class EstadoDAO {
 	public List<Estado> listarEstado() throws SQLException {
 		List<Estado> vetCidade = new ArrayList();
 		Connection connection = new Conexao().getConexao();
-		String sql = "SELECT * FROM estado";
+		String sql = "SELECT * FROM estado ORDER BY nome ASC";
 		PreparedStatement sqlSelect = connection.prepareStatement(sql);
 		ResultSet rs = sqlSelect.executeQuery();
 		Estado estado;

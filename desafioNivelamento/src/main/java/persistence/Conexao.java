@@ -19,7 +19,6 @@ public class Conexao {
 	public Connection getConexao(){
         String url = "jdbc:sqlite:lojas.db";
         try {
-           // System.out.println("Sucesso na Conexao....");
             return DriverManager.getConnection(url);
         } catch (SQLException ex) {
             System.out.println("Erro na Conexao....");

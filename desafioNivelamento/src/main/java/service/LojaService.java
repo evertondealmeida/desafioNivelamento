@@ -18,6 +18,8 @@ public class LojaService {
 
 	public void inserirLoja(Loja Loja) {	
 		try {
+			Loja.setCnpj(somenteNumeros(Loja.getCnpj()));
+			Loja.setTelefone(somenteNumeros(Loja.getTelefone()));
 			LojaMap.put(Integer.toString(Loja.getId()), Loja);
 			dao.inserir(Loja);
 		} catch (SQLException e) {
@@ -25,7 +27,6 @@ public class LojaService {
 			e.printStackTrace();
 		}
 	}
-
 	
 	public Collection<Loja> listarLojas(String codigoEstado, String codigoCidade) {
 		LojaMap.clear();
@@ -37,43 +38,35 @@ public class LojaService {
 			for (int i = 0; i < vetLoja.size(); i++) {
 				Loja aux = vetLoja.get(i);
 				LojaMap.put(Integer.toString(aux.getId()), aux);
-				System.out.println("Loja:" + aux.toString());
 			}
-			
-		
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return LojaMap.values();
-		
+		return LojaMap.values();		
 	}
-
 	
-	public Loja getLoja(String id) {
+	public Loja obterLoja(String id) {
+		Loja loja = new Loja();
+		try {
+			loja = dao.obterLoja(Integer.parseInt(id));
+			LojaMap.put(Integer.toString(loja.getId()), loja);
+			System.out.println("Loja:" + loja.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
 		return LojaMap.get(id);
 	}
-
 	
-	
-	public void excluirLoja(String id) {
-		
+	public void excluirLoja(String id) {		
 		try {
 			dao.excluir(Integer.parseInt(id));
-			LojaMap.remove(id);
-			
+			LojaMap.remove(id);			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	
-	public boolean obterLoja(String id) {
-		return LojaMap.containsKey(id);
-	}
-
-	
 	public Loja atualizarLoja(Loja loja) {
 		try {
 			dao.atualizar(loja);
@@ -84,7 +77,17 @@ public class LojaService {
 		return null;
 	}
 	
+	private String somenteNumeros(String numero) {
+	    StringBuffer sb = new StringBuffer();
 
-	
+	    char [] caracteres = numero.toCharArray();
+
+	    for (Character caracter : caracteres) {
+	        if (Character.isDigit(caracter)) {
+	            sb.append(caracter);
+	        }
+	    }
+	return sb.toString();
+	}
 
 }

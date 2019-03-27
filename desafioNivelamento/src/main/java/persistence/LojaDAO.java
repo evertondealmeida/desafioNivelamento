@@ -20,7 +20,7 @@ public class LojaDAO {
 		String sql = "SELECT loja.* FROM loja \r\n" 
 		        + "INNER JOIN cidade ON loja.codigoCidade = cidade.codigo\r\n"
 				+ "INNER JOIN estado ON cidade.codigoEstado = estado.codigo\r\n"
-				+ "WHERE "+filtro;
+				+ "WHERE "+filtro+" ORDER BY loja.nome ASC";
 		PreparedStatement sqlSelect = connection.prepareStatement(sql);
 		sqlSelect.setInt(1, codigoEstado > 0 ? codigoEstado : 0);
 		sqlSelect.setInt(2, codigoCidade > 0 ? codigoCidade : 0);
@@ -70,7 +70,6 @@ public class LojaDAO {
 	public void atualizar(Loja Loja) throws SQLException {
 		Connection connection = new Conexao().getConexao();
 		String sql = "UPDATE loja SET nome = ?, endereco = ?,telefone = ?, cnpj = ?, horarioAtendimento = ?, codigoCidade = ? WHERE id = ?";
-
 		PreparedStatement sqlInsert = connection.prepareStatement(sql);
 		sqlInsert.setString(1, Loja.getNome());
 		sqlInsert.setString(2, Loja.getEndereco());
@@ -90,19 +89,18 @@ public class LojaDAO {
 		PreparedStatement sqlSelect = connection.prepareStatement(sql);
 		sqlSelect.setInt(1, id);
 		ResultSet rs = sqlSelect.executeQuery();
-		Loja Loja;
+		Loja loja = new Loja();;
 		if (rs.next()) {
-			Loja = new Loja();
-			Loja.setId(rs.getInt("id"));
-			Loja.setNome(rs.getString("nome"));
-			Loja.setEndereco(rs.getString("endereco"));
-			Loja.setTelefone(rs.getString("telefone"));
-			Loja.setCnpj(rs.getString("cnpj"));
-			Loja.setHorarioAtendimento(rs.getString("horarioAtendimento"));
-			Loja.setId(rs.getInt("codigoLoja"));
+			loja.setId(rs.getInt("id"));
+			loja.setNome(rs.getString("nome"));
+			loja.setEndereco(rs.getString("endereco"));
+			loja.setTelefone(rs.getString("telefone"));
+			loja.setCnpj(rs.getString("cnpj"));
+			loja.setHorarioAtendimento(rs.getString("horarioAtendimento"));
+			loja.setCodigoCidade(rs.getInt("codigoCidade"));
 		}
 		sqlSelect.close();
 		connection.close();
-		return null;
+		return loja;
 	}
 }
