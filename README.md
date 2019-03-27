@@ -1,5 +1,5 @@
-# desafioNivelamento
-#Banco de Dados  
+# Instruções de utilização
+# Banco de Dados  
 
   
 Para levantar o banco:     
@@ -12,7 +12,7 @@ Informações:
     
     *Na pasta dataBase contem os scripts de inserção e criação, que foram utilizados no banco.
   
-#DEV - Métodos HTTP:
+# DEV - Métodos HTTP:
   
 Inserir:
     
@@ -46,7 +46,7 @@ Listar dados de uma loja:
     
     *Aceita ID de uma loja via GET;
 
-#Front:
+# Front:
 
 Para abrir a página html:
   
