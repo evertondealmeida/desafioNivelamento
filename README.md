@@ -2,7 +2,7 @@
 #Banco de Dados  
 
   
-Para levandar o banco:     
+Para levantar o banco:     
      
      *Entrar na pasta desafioDesenvovimento;
      *Abrir o terminal através dessa pasta;
@@ -12,7 +12,7 @@ Informações:
     
     *Na pasta dataBase contem os scripts de inserção e criação, que foram utilizados no banco.
   
-#DEV - Metodos HTTP:
+#DEV - Métodos HTTP:
   
 Inserir:
     
@@ -36,11 +36,11 @@ Excluir:
     
 Listar lojas por Estado:
     
-    *Aceita codigo do IBGE do Estado via GET;
+    *Aceita código do IBGE do Estado via GET;
     
 Listar lojas por Cidade:
     
-    *Aceita codigo do IBGE do Estado / o codigo do IBGE da Cidade via GET;
+    *Aceita código do IBGE do Estado / o código do IBGE da Cidade via GET;
     
 Listar dados de uma loja:
     
@@ -52,10 +52,3 @@ Para abrir a página html:
   
     *Entra na pasta Front do projeto;
     *Dentro da pasta clique em index.html
-
-
-
-  
-  
-  
-   
