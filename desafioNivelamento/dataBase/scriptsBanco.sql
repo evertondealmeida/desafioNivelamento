@@ -1,6 +1,6 @@
-INSERT INTO loja VALUES(0,'TAQI','centro','3232','01234','tododia',4315602);
-INSERT INTO loja VALUES(1,'Marisa','centro','3232','01234','tododia',4315602);
-INSERT INTO loja VALUES(2,'Renner','centro','3232','01234','tododia',4315602);
+INSERT INTO loja VALUES(0,'TAQI','centro','5332323232','12345678901234','tododia',4315602);
+INSERT INTO loja VALUES(1,'Marisa','centro','5332323232','01234567890123','tododia',4315602);
+INSERT INTO loja VALUES(2,'Renner','centro','5332323232','0987654321098','tododia',5300108);
 
 
 
