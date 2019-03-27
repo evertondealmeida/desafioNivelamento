@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>API de consumo</title>
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/heroic-features.css" rel="stylesheet">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Encontre uma loja perto de você</a>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <header class="jumbotron my-4">
+      <p class="lead">Informe:</p>
+      <div class="row">
+        <div class="col-sm-6">
+            <label for="jq-validation-select2" class="col-sm-3 control-label">Estado</label>
+              <select name="estados" id="cmbEstado">
+                  <option value="0">Selecione o Estado</option>
+              </select> 
+        </div>
+        <div class="col-sm-6">
+            <label for="jq-validation-select2" class="col-sm-3 control-label">Cidade</label>
+              <select name="cidades" id="cmbCidade">
+                  <option value="0">Selecione a Cidade</option>
+              </select> 
+        </div>
+      </div>
+    </header>
+    <div class="row text-left">
+      <div class="col-lg-3 col-md-6 mb-4">
+          <h2>Nossas Lojas</h2> 
+      </div>
+    </div>
+    <div class="col-md-12" >
+      <div class="row text-center" id="listarLojas">
+
+      </div>
+    </div>
+    <div class="col-md-12" >
+      <div class="row text-center" id="nenhumaLoja">
+      </div>
+    </div>
+  </div>
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Everton Almeida 2019</p>
+    </div>
+  </footer>
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
+<script type="text/javascript">
+  var valorEstado;
+  var semLoja = `<div class="col-md-12 text-left"><p>Nenhuma loja disponível nessa região...</p></div>`
+  window.addEventListener("load",function(){
+    carregarEstados();
+  });
+  function carregarEstados(){
+      $.ajax({
+        url: 'http://localhost:4567/Lojas/Estados',
+        success:function(data){
+          var estados = data;
+          var option = '<option value="0">Selecione o Estado</option>';
+          for(var i=0; i < estados.data.length;i++){
+            option += `'<option value="${estados.data[i].codigo}">${estados.data[i].nome}</option>'`;
+          }
+          $('#cmbEstado').html(option).show(); 
+        }   
+      });
+  }
+  function carregarCidades(codigo){
+    carregarLojasEstado(codigo);
+    if(codigo != "0"){
+        $.ajax({
+          url: 'http://localhost:4567/Lojas/Cidades/'+codigo,
+          success:function(data){
+            var cidades = data;
+            var option = '<option value="">Selecione a Cidade</option>';
+            for(var i=0; i < cidades.data.length;i++){
+              option += `'<option class="${cidades.data[i].codigoEstado}" value="${cidades.data[i].codigo}">${cidades.data[i].nome}</option>'`;
+            }
+            $('#cmbCidade').html(option).show(); 
+          }   
+        });
+    }else{
+        $('#cmbCidade').html('<option value="">Selecione a Cidade</option>');
+    }
+  }
+  function carregarLojasEstado(codigo){
+    $('#nenhumaLoja').html("");
+    $('#listarLojas').html("");
+    $.ajax({
+      url: 'http://localhost:4567/Lojas/Procurar/'+codigo+'/0',
+      success:function(data){
+        criarCards(data);  
+      }
+    });
+  }
+  $('[name="estados"]').change(function(){ 
+    carregarCidades($(this).val());
+    valorEstado = $(this).val();
+  });
+  $('[name="cidades"]').change(function(){
+    carregarLojasCidade(valorEstado,$(this).val());
+  }); 
+  function carregarLojasCidade(codigoEstado,codigoCidade){
+    $('#nenhumaLoja').html("");
+    $('#listarLojas').html("");
+    $.ajax({
+      url: 'http://localhost:4567/Lojas/Procurar/'+codigoEstado+'/'+codigoCidade,
+      success:function(data){
+        criarCards(data);
+      }
+    });
+  }
+  function criarCards(data){
+    var lojas = data;
+        for(var i=0; i < lojas.data.length;i++){
+          var item = `<div class="col-md-3">
+              <div class="card h-100 text-left">
+                <section>
+                  <h3>${lojas.data[i].nome}</h3>
+                  <h6><b>Endereço:</b> ${lojas.data[i].endereco}</h6>  
+                  <h6><b>Telefone:</b> ${(lojas.data[i].telefone).replace(/(\d{2})(\d{4})(\d{4})/, "(\$1) \$2-\$3")}</h6>
+                  <h6><b>CNPJ:</b> ${(lojas.data[i].cnpj).replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g,"\$1.\$2.\$3\-\$4")}</h6>
+                  <h6><b>Horário de Atendimento:</b> ${lojas.data[i].horarioAtendimento}</h6>                  
+                </section>  
+            </div>`;
+          $("#listarLojas").append(item);
+        }
+        if(lojas.data.length < 1)$("#nenhumaLoja").append(semLoja);
+  }
+</script>
+
+
