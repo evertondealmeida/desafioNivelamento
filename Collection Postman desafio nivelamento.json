@@ -1,0 +1,167 @@
+{
+	"info": {
+		"_postman_id": "dde624ca-8775-429b-99c0-763f5a76de5c",
+		"name": "Collection desafio nivelamento",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Adicionar Loja",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Coplace\",\r\n    \"endereco\": \"Rua b, 171\",\r\n    \"telefone\": \"(53)3230-1013\",\r\n    \"cnpj\": \"098.765.432/109-8\",\r\n    \"horarioAtendimento\": \"Diariamente das 11hs às 23hs\",\r\n    \"codigoCidade\": 4314407\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4567/Lojas/Inserir",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4567",
+					"path": [
+						"Lojas",
+						"Inserir"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Excluir Loja",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:4567/Lojas/Excluir/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4567",
+					"path": [
+						"Lojas",
+						"Excluir",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar Loja",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:4567/Lojas/Editar/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4567",
+					"path": [
+						"Lojas",
+						"Editar",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vizualizar Loja",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:4567/Lojas/ObterLoja/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4567",
+					"path": [
+						"Lojas",
+						"ObterLoja",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Lojas por Estado",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:4567/Lojas/Procurar/43/0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4567",
+					"path": [
+						"Lojas",
+						"Procurar",
+						"43",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Lojas Por Estado e Cidade",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:4567/Lojas/Procurar/43/4315602",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4567",
+					"path": [
+						"Lojas",
+						"Procurar",
+						"43",
+						"4315602"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
