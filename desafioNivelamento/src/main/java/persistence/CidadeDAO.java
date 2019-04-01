@@ -30,4 +30,18 @@ public class CidadeDAO {
 	        connection.close();
 	        return vetCidade;
 	}
+	public boolean procuraCidade(int cdCidade) throws SQLException {
+		boolean resultado = false;
+		Connection connection = new Conexao().getConexao();
+		String sql = "SELECT * FROM cidade WHERE codigo = ? ORDER BY nome ASC";
+		PreparedStatement sqlSelect = connection.prepareStatement(sql);
+		sqlSelect.setInt(1, cdCidade);
+		ResultSet rs = sqlSelect.executeQuery();
+		 if (rs.next()){
+			   resultado = true;
+	        }
+	        sqlSelect.close();
+	        connection.close();
+	     return resultado;
+	}
 }

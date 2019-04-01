@@ -24,20 +24,40 @@ public class LojaController {
 
         post("/Lojas/Inserir", (request, response) -> {
             response.type("application/json");
-            Loja Loja = new Gson().fromJson(request.body(), Loja.class);
-            LojaService.inserirLoja(Loja);
-            return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS));
+            Loja loja = new Gson().fromJson(request.body(), Loja.class);
+            if(LojaService.verificaJSON(loja)) {
+            	if(LojaService.inserirLoja(loja).equals("")) {
+            		return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"Loja atualizada com sucesso"));
+            	}else {
+            		return new Gson().toJson(new StandardResponse(StatusResponse.ERROR, LojaService.inserirLoja(loja)));
+            	}
+            }
+            return new Gson().toJson(new StandardResponse(StatusResponse.ERROR,"Não é possível inserir campos nulos"));
         });
         put("/Lojas/Editar/:id", (request, response) -> {
             response.type("application/json");
-            Loja toEdit = new Gson().fromJson(request.body(), Loja.class);
-            Loja loja = LojaService.atualizarLoja(toEdit);
-            return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS));
+            Loja loja = new Gson().fromJson(request.body(), Loja.class);
+            if(LojaService.verificaJSON(loja)) {
+            	if(!LojaService.atualizarLoja(loja).equals("Esse identificador de loja não existe")) {
+	            	if(LojaService.atualizarLoja(loja).equals("")) {
+	            		return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"Loja atualizada com sucesso"));
+	            	}else {
+	            		return new Gson().toJson(new StandardResponse(StatusResponse.ERROR, LojaService.atualizarLoja(loja)));
+	            	}
+            	}else {
+            		return new Gson().toJson(new StandardResponse(StatusResponse.ERROR, LojaService.atualizarLoja(loja)));
+            	}
+            }
+            return new Gson().toJson(new StandardResponse(StatusResponse.ERROR,"Não é possível inserir campos nulos"));
         });
         delete("/Lojas/Excluir/:id", (request, response) -> {
+        	
             response.type("application/json");
-            LojaService.excluirLoja(request.params(":id"));
-            return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, "Loja deleted"));
+            if(!LojaService.excluirLoja(request.params(":id")).equals("Esse identificador de loja não existe")) {
+             return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, "Loja deletada com sucesso"));
+            }else{
+            	return new Gson().toJson(new StandardResponse(StatusResponse.ERROR, LojaService.excluirLoja(request.params(":id"))));
+            }
         });       
         get("/Lojas/Cidades/:id", (request, response) -> {   	
             response.type("application/json");
@@ -62,7 +82,14 @@ public class LojaController {
         });              
         get("/Lojas/ObterLoja/:id", (request, response) -> {
             response.type("application/json");
-            return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, new Gson().toJsonTree(LojaService.obterLoja(request.params(":id")))));
+            Loja loja = new Gson().fromJson(request.body(), Loja.class);
+            loja = LojaService.obterLoja(request.params(":id"));
+
+            if(loja != null) {
+            	return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, new Gson().toJsonTree(loja)));
+            }else {
+            	return new Gson().toJson(new StandardResponse(StatusResponse.ERROR, "Esse identificador de loja não existe"));
+            }
         });
 	
     }	

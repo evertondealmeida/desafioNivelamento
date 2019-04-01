@@ -103,4 +103,18 @@ public class LojaDAO {
 		connection.close();
 		return loja;
 	}
+	public boolean verificaLoja(int id) throws Exception {
+		boolean resultado = false;
+		Connection connection = new Conexao().getConexao();
+		String sql = "SELECT * FROM loja WHERE id = ?";
+		PreparedStatement sqlSelect = connection.prepareStatement(sql);
+		sqlSelect.setInt(1, id);
+		ResultSet rs = sqlSelect.executeQuery();
+		if (rs.next()) {
+			resultado = true;
+		}
+		sqlSelect.close();
+		connection.close();
+		return resultado;
+	}
 }

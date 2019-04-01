@@ -7,7 +7,7 @@ public class Loja {
 	private String telefone;
 	private String cnpj;
 	private String horarioAtendimento;
-	private int codigoCidade;
+	private Integer codigoCidade;
 	
 	
 	public Loja() {
@@ -16,7 +16,7 @@ public class Loja {
 
 
 
-	public Loja(int id, String nome, String endereco, String telefone, String cnpj, String horarioAtendimento,
+	/*public Loja(int id, String nome, String endereco, String telefone, String cnpj, String horarioAtendimento,
 			int codigoCidade) {
 		super();
 		this.id = id;
@@ -26,7 +26,7 @@ public class Loja {
 		this.cnpj = cnpj;
 		this.horarioAtendimento = horarioAtendimento;
 		this.codigoCidade = codigoCidade;
-	}
+	}*/
 	
 	
 
@@ -86,11 +86,11 @@ public class Loja {
 		this.horarioAtendimento = horarioAtendimento;
 	}
 
-	public int getCodigoCidade() {
+	public Integer getCodigoCidade() {
 		return codigoCidade;
 	}
 
-	public void setCodigoCidade(int codigoCidade) {
+	public void setCodigoCidade(Integer codigoCidade) {
 		this.codigoCidade = codigoCidade;
 	}
 

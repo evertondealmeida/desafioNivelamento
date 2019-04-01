@@ -12,21 +12,26 @@ import persistence.LojaDAO;
 public class LojaService {
 	private HashMap<String, Loja> LojaMap;
 	LojaDAO dao = new LojaDAO();
+	CidadeDAO cidadeDAO = new CidadeDAO();
 	public LojaService() {
 		LojaMap = new HashMap<>();
 	}
 
-	public void inserirLoja(Loja Loja) {	
-		try {
-			Loja.setCnpj(somenteNumeros(Loja.getCnpj()));
-			Loja.setTelefone(somenteNumeros(Loja.getTelefone()));
-			LojaMap.put(Integer.toString(Loja.getId()), Loja);
-			dao.inserir(Loja);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public String inserirLoja(Loja loja) throws SQLException {	
+			boolean camposValidos = true;
+			String retorno;
+			loja.setCnpj(somenteNumeros(loja.getCnpj()));
+			retorno = verificaCNPJ(loja)==true?"":"CNPJ deve conter 14 digitos";
+			loja.setTelefone(somenteNumeros(loja.getTelefone()));
+			retorno += cidadeDAO.procuraCidade(loja.getCodigoCidade())==true?"":(retorno==""?"Esse código de cidade não existe":", Esse código de cidade não existe");
+			if(retorno.equals("")) {
+				LojaMap.put(Integer.toString(loja.getId()), loja);
+				dao.inserir(loja);
+			}			
+			return retorno;	
 	}
+	
+	
 	
 	public Collection<Loja> listarLojas(String codigoEstado, String codigoCidade) {
 		LojaMap.clear();
@@ -57,24 +62,35 @@ public class LojaService {
 		return LojaMap.get(id);
 	}
 	
-	public void excluirLoja(String id) {		
-		try {
-			dao.excluir(Integer.parseInt(id));
-			LojaMap.remove(id);			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public String excluirLoja(String id) throws NumberFormatException, Exception  {		
+		   String retorno;
+		   retorno = dao.verificaLoja(Integer.parseInt(id)) == true?"":"Esse identificador de loja não existe";
+		   if(retorno.equals("")) {
+				dao.excluir(Integer.parseInt(id));
+				LojaMap.remove(id);	
+				return retorno;
+		   }else {
+			   return retorno;
+		   }
 	}
 
-	public Loja atualizarLoja(Loja loja) {
-		try {
-			dao.atualizar(loja);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public String atualizarLoja(Loja loja) throws Exception {
+		boolean camposValidos = true;
+		String retorno;
+		loja.setCnpj(somenteNumeros(loja.getCnpj()));
+		retorno = dao.verificaLoja(loja.getId()) == true?"":"Esse identificador de loja não existe";
+		if(retorno.equals("")) {
+			retorno = verificaCNPJ(loja)==true?"":"CNPJ deve conter 14 digitos";
+			loja.setTelefone(somenteNumeros(loja.getTelefone()));
+			retorno += cidadeDAO.procuraCidade(loja.getCodigoCidade())==true?"":(retorno==""?"Esse código de cidade não existe":", Esse código de cidade não existe");
+			if(retorno.equals("")) {
+				LojaMap.put(Integer.toString(loja.getId()), loja);
+				dao.atualizar(loja);
+			}			
+			return retorno;	
 		}
-		return null;
+		return retorno;	
+		
 	}
 	
 	private String somenteNumeros(String numero) {
@@ -89,5 +105,18 @@ public class LojaService {
 	    }
 	return sb.toString();
 	}
+	public boolean verificaJSON(Loja Loja) {
+		boolean jsonValido = true;
+		if(Loja.getCnpj() == null) jsonValido = false;
+		if(Loja.getTelefone() == null) jsonValido = false;
+		if(Loja.getEndereco() == null) jsonValido = false;
+		if(Loja.getNome() == null) jsonValido = false;
+		if(Loja.getCodigoCidade() == null) jsonValido = false;
+		return jsonValido ;
+	}
+	private boolean verificaCNPJ(Loja Loja) {
+		return Loja.getCnpj().length() == 14? true : false;
+	}
+	
 
 }

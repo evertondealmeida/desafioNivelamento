@@ -1,7 +1,7 @@
 package controller;
 
 public enum StatusResponse {
-    SUCCESS("Success"), ERROR("Error");
+    SUCCESS("Sucesso"), ERROR("Erro"), ;
     final private String status;
     StatusResponse(String status) {
         this.status = status;
