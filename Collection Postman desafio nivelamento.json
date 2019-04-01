@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nome\": \"Coplace\",\r\n    \"endereco\": \"Rua b, 171\",\r\n    \"telefone\": \"(53)3230-1013\",\r\n    \"cnpj\": \"098.765.432/109-8\",\r\n    \"horarioAtendimento\": \"Diariamente das 11hs às 23hs\",\r\n    \"codigoCidade\": 4314407\r\n}"
+					"raw": "{\r\n    \"nome\": \"Renner\",\r\n    \"endereco\": \"Rua b, 171\",\r\n    \"telefone\": \"(53)3230-1013\",\r\n    \"cnpj\": \"098.765.432/109-18\",\r\n    \"horarioAtendimento\": \"Diariamente das 11hs às 23hs\",\r\n    \"codigoCidade\": 4314407\r\n}"
 				},
 				"url": {
 					"raw": "http://localhost:4567/Lojas/Inserir",
@@ -46,7 +46,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:4567/Lojas/Excluir/1",
+					"raw": "http://localhost:4567/Lojas/Excluir/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -55,7 +55,7 @@
 					"path": [
 						"Lojas",
 						"Excluir",
-						"1"
+						"2"
 					]
 				}
 			},
@@ -65,13 +65,20 @@
 			"name": "Editar Loja",
 			"request": {
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "{\r\n\t\"id\":2,\r\n    \"nome\": \"Renner 24\",\r\n    \"endereco\": \"Rua b, 171\",\r\n    \"telefone\": \"(53)3230-1013\",\r\n    \"cnpj\": \"098.765.432/109-18\",\r\n    \"horarioAtendimento\": \"Diariamente das 11hs às 23hs\",\r\n    \"codigoCidade\": 4314407\r\n}"
 				},
 				"url": {
-					"raw": "http://localhost:4567/Lojas/Editar/5",
+					"raw": "http://localhost:4567/Lojas/Editar/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -80,7 +87,7 @@
 					"path": [
 						"Lojas",
 						"Editar",
-						"5"
+						"2"
 					]
 				}
 			},
@@ -96,7 +103,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:4567/Lojas/ObterLoja/7",
+					"raw": "http://localhost:4567/Lojas/ObterLoja/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -105,7 +112,7 @@
 					"path": [
 						"Lojas",
 						"ObterLoja",
-						"7"
+						"1"
 					]
 				}
 			},
