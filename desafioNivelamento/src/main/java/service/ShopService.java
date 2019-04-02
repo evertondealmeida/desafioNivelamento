@@ -5,7 +5,12 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import com.google.gson.Gson;
+
+import model.ReplyMessage;
 import model.Shop;
+import model.StandardResponse;
+import model.StatusResponse;
 import persistence.CityDAO;
 import persistence.ShopDAO;
 
@@ -19,77 +24,61 @@ public class ShopService {
 	}
 
 	public String insertShop(Shop shop) throws SQLException {
-		String retorno;
+		if (!shop.nullFields(shop))
+			return ReplyMessage.NullFields;
 		shop.setCnpj(shop.onlyNumbers(shop.getCnpj()));
-		retorno = shop.checkCNPJ(shop) ? "" : "CNPJ deve conter 14 digitos";
+		if (!shop.checkCNPJ(shop))
+			return ReplyMessage.SizeCNPJ;
 		shop.setPhone(shop.onlyNumbers(shop.getPhone()));
-		retorno += cityDAO.searchCity(shop.getCodeCity()) == true ? "": (retorno == "" ? "Esse código de city não existe" : ", Esse código de city não existe");
-		if (retorno.equals("")) {
-			ShopMap.put(Integer.toString(shop.getId()), shop);
-			dao.insertShop(shop);
-		}
-		return retorno;
+		if (cityDAO.searchCity(shop.getCodeCity()))
+			return ReplyMessage.IdCityNotExist;
+		dao.insertShop(shop);
+		ShopMap.put(Integer.toString(shop.getId()), shop);
+		return ReplyMessage.Empty;
 	}
 
-	public Collection<Shop> listShops(String codeState, String codeCity) {
+	public Collection<Shop> listShops(String codeState, String codeCity) throws SQLException {
 		ShopMap.clear();
 		codeState = codeState != null ? codeState : "0";
 		codeCity = codeCity != null ? codeCity : "0";
-		try {
-			List<Shop> vetShop;
-			vetShop = dao.listShop(Integer.parseInt(codeState), Integer.parseInt(codeCity));
-			for (int i = 0; i < vetShop.size(); i++) {
-				Shop aux = vetShop.get(i);
-				ShopMap.put(Integer.toString(aux.getId()), aux);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		List<Shop> vetShop;
+		vetShop = dao.listShop(Integer.parseInt(codeState), Integer.parseInt(codeCity));
+		for (int i = 0; i < vetShop.size(); i++) {
+			Shop aux = vetShop.get(i);
+			ShopMap.put(Integer.toString(aux.getId()), aux);
 		}
 		return ShopMap.values();
 	}
 
-	public Shop getShop(String id) {
+	public Shop getShop(String id) throws NumberFormatException, Exception {
 		Shop shop = new Shop();
-		try {
-			shop = dao.getShop(Integer.parseInt(id));
-			ShopMap.put(Integer.toString(shop.getId()), shop);
-			System.out.println("Shop:" + shop.toString());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		shop = dao.getShop(Integer.parseInt(id));
+		ShopMap.put(Integer.toString(shop.getId()), shop);
 		return ShopMap.get(id);
 	}
 
 	public String deleteShop(String id) throws NumberFormatException, Exception {
-		String retorno;
-		retorno = dao.checkShop(Integer.parseInt(id)) == true ? "" : "Esse identificador de shop não existe";
-		if (retorno.equals("")) {
-			dao.delete(Integer.parseInt(id));
-			ShopMap.remove(id);
-			return retorno;
-		} else {
-			return retorno;
-		}
+		if (!dao.checkShop(Integer.parseInt(id)))
+			return ReplyMessage.IdShopNotExist;
+		dao.delete(Integer.parseInt(id));
+		ShopMap.remove(id);
+		return ReplyMessage.Empty;
 	}
 
 	public String updateShop(Shop shop) throws Exception {
-		boolean validFields = true;
-		String retorno;
+		if (!shop.idNullField(shop))
+			return ReplyMessage.NullFields;
 		shop.setCnpj(shop.onlyNumbers(shop.getCnpj()));
-		retorno = dao.checkShop(shop.getId()) == true ? "" : "Esse identificador de shop não existe";
-		if (retorno.equals("")) {
-			retorno = shop.checkCNPJ(shop) == true ? "" : "CNPJ deve conter 14 digitos";
-			shop.setPhone(shop.onlyNumbers(shop.getPhone()));
-			retorno += cityDAO.searchCity(shop.getCodeCity()) == true ? ""
-					: (retorno == "" ? "Esse código de city não existe" : ", Esse código de city não existe");
-			if (retorno.equals("")) {
-				ShopMap.put(Integer.toString(shop.getId()), shop);
-				dao.update(shop);
-			}
-			return retorno;
-		}
-		return retorno;
-
+		if (!dao.checkShop(shop.getId()))
+			return ReplyMessage.IdShopNotExist;
+		if (!shop.checkCNPJ(shop))
+			return ReplyMessage.SizeCNPJ;
+		shop.setPhone(shop.onlyNumbers(shop.getPhone()));
+		if (!cityDAO.searchCity(shop.getCodeCity()))
+			return ReplyMessage.IdCityNotExist;
+		ShopMap.put(Integer.toString(shop.getId()), shop);
+		dao.update(shop);
+		return ReplyMessage.Empty;
 	}
 
 }

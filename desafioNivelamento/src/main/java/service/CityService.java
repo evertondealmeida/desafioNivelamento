@@ -23,7 +23,6 @@ public class CityService {
 		CityMap.clear();
 		try {
 			List<City> vetCity = new ArrayList();
-			;
 			vetCity = dao.listCity(Integer.parseInt(code));
 			for (int i = 0; i < vetCity.size(); i++) {
 				City aux = vetCity.get(i);

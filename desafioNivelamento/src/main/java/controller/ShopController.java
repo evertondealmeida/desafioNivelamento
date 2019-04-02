@@ -4,6 +4,7 @@ import static spark.Spark.*;
 
 import java.util.List;
 import com.google.gson.Gson;
+import model.ReplyMessage;
 import model.City;
 import model.Shop;
 import model.StandardResponse;
@@ -19,65 +20,52 @@ public class ShopController {
 	public static void main(String[] args) throws Exception {
 		final ShopService ShopService = new ShopService();
 		final StateService StateService = new StateService();
-		final CityService CityService = new CityService();
+		final CityService cityService = new CityService();
 
 		post("/shop", (request, response) -> {
 			response.type("application/json");
 			Shop shop = new Gson().fromJson(request.body(), Shop.class);
-			if (shop.nullFields(shop)) {
-				if (ShopService.insertShop(shop).equals("")) {
-					return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, "Loja inserida com sucesso"));
-				} else {
-					return new Gson().toJson(new StandardResponse(StatusResponse.ERROR, ShopService.insertShop(shop)));
-				}
-			}
-			return new Gson().toJson(new StandardResponse(StatusResponse.ERROR, "Não é possível inserir campos nulos"));
+			String helper = ShopService.insertShop(shop);
+			if (helper.equals(ReplyMessage.Empty))
+				return new Gson()
+						.toJson(new StandardResponse(StatusResponse.SUCCESS, ReplyMessage.InsertedSuccessfully));
+			return new Gson().toJson(new StandardResponse(StatusResponse.ERROR, helper));
 		});
+
+		delete("/shop/:id", (request, response) -> {
+			response.type("application/json");
+			String helper = ShopService.deleteShop(request.params(":id"));
+			if (helper.equals(ReplyMessage.Empty))
+				return new Gson()
+						.toJson(new StandardResponse(StatusResponse.SUCCESS, ReplyMessage.DeletedSuccessfully));
+			return new Gson().toJson(new StandardResponse(StatusResponse.ERROR, helper));
+		});
+
 		put("/shop/:id", (request, response) -> {
 			response.type("application/json");
 			Shop shop = new Gson().fromJson(request.body(), Shop.class);
-			if (!shop.nullFields(shop))
+			String helper = ShopService.updateShop(shop);
+			if (helper.equals(ReplyMessage.Empty))
 				return new Gson()
-						.toJson(new StandardResponse(StatusResponse.ERROR, "Não é possível inserir campos nulos"));
-
-			if (!ShopService.updateShop(shop).equals("Esse identificador de shop não existe")) {
-				if (ShopService.updateShop(shop).equals("")) {
-					return new Gson()
-							.toJson(new StandardResponse(StatusResponse.SUCCESS, "Loja atualizada com sucesso"));
-				} else {
-					return new Gson()
-							.toJson(new StandardResponse(StatusResponse.ERROR, ShopService.updateShop(shop)));
-				}
-			} else {
-				return new Gson().toJson(new StandardResponse(StatusResponse.ERROR, ShopService.updateShop(shop)));
-			}
-
+						.toJson(new StandardResponse(StatusResponse.SUCCESS, ReplyMessage.ChangedSuccessfully));
+			return new Gson().toJson(new StandardResponse(StatusResponse.ERROR, helper));
 		});
-		delete("/shop/:id", (request, response) -> {
 
-			response.type("application/json");
-			if (!ShopService.deleteShop(request.params(":id")).equals("Esse identificador de shop não existe")) {
-				return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, "Loja deletada com sucesso"));
-			} else {
-				return new Gson().toJson(
-						new StandardResponse(StatusResponse.ERROR, ShopService.deleteShop(request.params(":id"))));
-			}
-		});
 		get("/citys/:id", (request, response) -> {
 			response.type("application/json");
 			response.header("Access-Control-Allow-Origin", "*");
 			response.header("Access-Control-Request-Method", "*");
 			response.header("Access-Control-Allow-Headers", "*");
 			return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,
-					new Gson().toJsonTree(CityService.listCity(request.params(":id")))));
+					new Gson().toJsonTree(cityService.listCity(request.params(":id")))));
 		});
 		get("/search/:state/:city", (request, response) -> {
 			response.type("application/json");
 			response.header("Access-Control-Allow-Origin", "*");
 			response.header("Access-Control-Request-Method", "*");
 			response.header("Access-Control-Allow-Headers", "*");
-			return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, new Gson()
-					.toJsonTree(ShopService.listShops(request.params(":state"), request.params(":city")))));
+			return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,
+					new Gson().toJsonTree(ShopService.listShops(request.params(":state"), request.params(":city")))));
 		});
 		get("/states", (request, response) -> {
 			response.type("application/json");

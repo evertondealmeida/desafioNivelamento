@@ -1,7 +1,7 @@
 package model;
 
 public class Shop {
-	private int id;
+	private Integer id;
 	private String name;
 	private String address;
 	private String phone;
@@ -13,11 +13,11 @@ public class Shop {
 		super();
 	}
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -83,6 +83,11 @@ public class Shop {
 				Shop.getName() != null && 
 				Shop.getCodeCity() != null
 			   ) validFields = true;
+		return validFields;
+	}
+	public boolean idNullField(Shop Shop) {
+		boolean validFields = false;
+			if (Shop.getId() != null && nullFields(Shop)) validFields = true;
 		return validFields;
 	}
 	
