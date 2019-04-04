@@ -1,27 +1,26 @@
 package controller;
 
 import static spark.Spark.*;
-
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import com.google.gson.Gson;
 import model.ReplyMessage;
-import model.City;
 import model.Shop;
 import model.StandardResponse;
 import model.StatusResponse;
-import persistence.CityDAO;
-import persistence.ConnectionDAO;
 import service.CityService;
 import service.StateService;
 import service.ShopService;
-import spark.Response;
+import spark.ModelAndView;
+import spark.Spark;
+import spark.template.mustache.MustacheTemplateEngine;
 
 public class ShopController {
 	public static void main(String[] args) throws Exception {
 		final ShopService ShopService = new ShopService();
 		final StateService StateService = new StateService();
 		final CityService cityService = new CityService();
-
+		staticFileLocation("/public");
 		post("/shop", (request, response) -> {
 			response.type("application/json");
 			Shop shop = new Gson().fromJson(request.body(), Shop.class);
@@ -31,6 +30,7 @@ public class ShopController {
 						.toJson(new StandardResponse(StatusResponse.SUCCESS, ReplyMessage.InsertedSuccessfully));
 			return new Gson().toJson(new StandardResponse(StatusResponse.ERROR, helper));
 		});
+		
 
 		delete("/shop/:id", (request, response) -> {
 			response.type("application/json");
@@ -50,31 +50,6 @@ public class ShopController {
 						.toJson(new StandardResponse(StatusResponse.SUCCESS, ReplyMessage.ChangedSuccessfully));
 			return new Gson().toJson(new StandardResponse(StatusResponse.ERROR, helper));
 		});
-
-		get("/citys/:id", (request, response) -> {
-			response.type("application/json");
-			response.header("Access-Control-Allow-Origin", "*");
-			response.header("Access-Control-Request-Method", "*");
-			response.header("Access-Control-Allow-Headers", "*");
-			return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,
-					new Gson().toJsonTree(cityService.listCity(request.params(":id")))));
-		});
-		get("/search/:state/:city", (request, response) -> {
-			response.type("application/json");
-			response.header("Access-Control-Allow-Origin", "*");
-			response.header("Access-Control-Request-Method", "*");
-			response.header("Access-Control-Allow-Headers", "*");
-			return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,
-					new Gson().toJsonTree(ShopService.listShops(request.params(":state"), request.params(":city")))));
-		});
-		get("/states", (request, response) -> {
-			response.type("application/json");
-			response.header("Access-Control-Allow-Origin", "*");
-			response.header("Access-Control-Request-Method", "*");
-			response.header("Access-Control-Allow-Headers", "*");
-			return new Gson().toJson(
-					new StandardResponse(StatusResponse.SUCCESS, new Gson().toJsonTree(StateService.listStates())));
-		});
 		get("/getShop/:id", (request, response) -> {
 			response.type("application/json");
 			Shop shop = new Gson().fromJson(request.body(), Shop.class);
@@ -87,6 +62,34 @@ public class ShopController {
 						.toJson(new StandardResponse(StatusResponse.ERROR, "Esse identificador de loja não existe"));
 			}
 		});
+		CorsFilter.apply();
+		
+		Spark.get("/log", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.clear();
+            return new ModelAndView(model, "src/main/resources/public/html/index.html");
+        }, new MustacheTemplateEngine());
 
+		Spark.get("/citys/:id", (request, response) -> {
+			response.type("application/json");
+			return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,
+					new Gson().toJsonTree(cityService.listCity(request.params(":id")))));
+		});
+		
+		Spark.get("/search/:state/:city", (request, response) -> {
+			response.type("application/json");
+			return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,
+					new Gson().toJsonTree(ShopService.listShops(request.params(":state"), request.params(":city")))));
+		});
+		
+		Spark.get("/states", (request, response) -> {
+			response.type("application/json");
+			return new Gson().toJson(
+					new StandardResponse(StatusResponse.SUCCESS, new Gson().toJsonTree(StateService.listStates())));
+		});
+		
 	}
+			/*public static String render(Map<String, Object> model, String templatePath) {
+			    return new MustacheTemplateEngine().render(new ModelAndView(model, templatePath));
+			}*/
 }

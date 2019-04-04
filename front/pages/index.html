@@ -24,13 +24,13 @@
       <div class="row">
         <div class="col-sm-6">
             <label for="jq-validation-select2" class="col-sm-3 control-label">Estado</label>
-              <select name="estados" id="cmbEstado">
+              <select name="States" id="cmbState">
                   <option value="0">Selecione o Estado</option>
               </select> 
         </div>
         <div class="col-sm-6">
             <label for="jq-validation-select2" class="col-sm-3 control-label">Cidade</label>
-              <select name="cidades" id="cmbCidade">
+              <select name="Citys" id="cmbCity">
                   <option value="0">Selecione a Cidade</option>
               </select> 
         </div>
@@ -62,64 +62,64 @@
 
 </html>
 <script type="text/javascript">
-  var valorEstado;
+  var valorState;
   var semLoja = `<div class="col-md-12 text-left"><p>Nenhuma loja disponível nessa região...</p></div>`
   window.addEventListener("load",function(){
-    carregarEstados();
+    carregarStates();
   });
-  function carregarEstados(){
+  function carregarStates(){
       $.ajax({
-        url: 'http://localhost:4567/Lojas/Estados',
+        url: 'http://localhost:4567/states',
         success:function(data){
-          var estados = data;
-          var option = '<option value="0">Selecione o Estado</option>';
-          for(var i=0; i < estados.data.length;i++){
-            option += `'<option value="${estados.data[i].codigo}">${estados.data[i].nome}</option>'`;
+          var States = data;
+          var option = '<option value="0">Selecione o State</option>';
+          for(var i=0; i < States.data.length;i++){
+            option += `'<option value="${States.data[i].code}">${States.data[i].name}</option>'`;
           }
-          $('#cmbEstado').html(option).show(); 
+          $('#cmbState').html(option).show(); 
         }   
       });
   }
-  function carregarCidades(codigo){
-    carregarLojasEstado(codigo);
-    if(codigo != "0"){
+  function carregarCitys(code){
+    carregarLojasState(code);
+    if(code != "0"){
         $.ajax({
-          url: 'http://localhost:4567/Lojas/Cidades/'+codigo,
+          url: 'http://localhost:4567/citys/'+code,
           success:function(data){
-            var cidades = data;
-            var option = '<option value="">Selecione a Cidade</option>';
-            for(var i=0; i < cidades.data.length;i++){
-              option += `'<option class="${cidades.data[i].codigoEstado}" value="${cidades.data[i].codigo}">${cidades.data[i].nome}</option>'`;
+            var Citys = data;
+            var option = '<option value="">Selecione a City</option>';
+            for(var i=0; i < Citys.data.length;i++){
+              option += `'<option class="${Citys.data[i].codeState}" value="${Citys.data[i].code}">${Citys.data[i].name}</option>'`;
             }
-            $('#cmbCidade').html(option).show(); 
+            $('#cmbCity').html(option).show(); 
           }   
         });
     }else{
-        $('#cmbCidade').html('<option value="">Selecione a Cidade</option>');
+        $('#cmbCity').html('<option value="">Selecione a City</option>');
     }
   }
-  function carregarLojasEstado(codigo){
+  function carregarLojasState(code){
     $('#nenhumaLoja').html("");
     $('#listarLojas').html("");
     $.ajax({
-      url: 'http://localhost:4567/Lojas/Procurar/'+codigo+'/0',
+      url: 'http://localhost:4567/search/'+code+'/0',
       success:function(data){
         criarCards(data);  
       }
     });
   }
-  $('[name="estados"]').change(function(){ 
-    carregarCidades($(this).val());
-    valorEstado = $(this).val();
+  $('[name="States"]').change(function(){ 
+    carregarCitys($(this).val());
+    valorState = $(this).val();
   });
-  $('[name="cidades"]').change(function(){
-    carregarLojasCidade(valorEstado,$(this).val());
+  $('[name="Citys"]').change(function(){
+    carregarLojasCity(valorState,$(this).val());
   }); 
-  function carregarLojasCidade(codigoEstado,codigoCidade){
+  function carregarLojasCity(codeState,codeCity){
     $('#nenhumaLoja').html("");
     $('#listarLojas').html("");
     $.ajax({
-      url: 'http://localhost:4567/Lojas/Procurar/'+codigoEstado+'/'+codigoCidade,
+      url: 'http://localhost:4567/search/'+codeState+'/'+codeCity,
       success:function(data){
         criarCards(data);
       }
@@ -131,11 +131,11 @@
           var item = `<div class="col-md-3">
               <div class="card h-100 text-left">
                 <section>
-                  <h3>${lojas.data[i].nome}</h3>
-                  <h6><b>Endereço:</b> ${lojas.data[i].endereco}</h6>  
-                  <h6><b>Telefone:</b> ${(lojas.data[i].telefone).replace(/(\d{2})(\d{4})(\d{4})/, "(\$1) \$2-\$3")}</h6>
+                  <h3>${lojas.data[i].name}</h3>
+                  <h6><b>Endereço:</b> ${lojas.data[i].address}</h6>  
+                  <h6><b>Telefone:</b> ${(lojas.data[i].phone).replace(/(\d{2})(\d{4})(\d{4})/, "(\$1) \$2-\$3")}</h6>
                   <h6><b>CNPJ:</b> ${(lojas.data[i].cnpj).replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g,"\$1.\$2.\$3\-\$4")}</h6>
-                  <h6><b>Horário de Atendimento:</b> ${lojas.data[i].horarioAtendimento}</h6>                  
+                  <h6><b>Horário de Atendimento:</b> ${lojas.data[i].workingHour}</h6>                  
                 </section>  
             </div>`;
           $("#listarLojas").append(item);
