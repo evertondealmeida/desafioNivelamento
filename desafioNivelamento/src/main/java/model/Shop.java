@@ -1,12 +1,36 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "shop")
 public class Shop {
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	
+	@Column(name = "name")
 	private String name;
+	
+	@Column(name = "address")
 	private String address;
+	
+	@Column(name = "phone")
 	private String phone;
+	
+	@Column(name = "cnpj")
 	private String cnpj;
+	
+	@Column(name = "workingHour")
 	private String workingHour;
+	
+	@Column(name = "codeCity")
 	private Integer codeCity;
 
 	public Shop() {

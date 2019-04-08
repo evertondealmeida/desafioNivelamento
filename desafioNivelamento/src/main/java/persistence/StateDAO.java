@@ -20,7 +20,7 @@ public class StateDAO {
 		State state;
 		while (rs.next()) {
 			state = new State();
-			state.setCode(rs.getInt("codigo"));
+			state.setCode(rs.getInt("code"));
 			state.setName(rs.getString("name"));
 			state.setUf(rs.getString("uf"));
 			vetCity.add(state);
