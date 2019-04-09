@@ -1,32 +1,22 @@
 package model;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-/*@Entity
-@Table(name = "state")*/
+@Entity
+@Table(name = "state")
 public class State {
-	//@Id
-	//@Column(name = "code")
-	//@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Id
+	@Column(name = "code")
 	private int code;
 	
-	//@Column(name = "name")
+	@Column(name = "name")
 	private String name;
 	
-	//@Column(name = "uf")
+	@Column(name = "uf")
 	private String uf;
-	
-	@OneToMany
-	private List city;
 	
 	public State() {
 		super();
@@ -49,12 +39,6 @@ public class State {
 	}
 	public void setUf(String uf) {
 		this.uf = uf;
-	}
-	public List getCity() {
-		return city;
-	}
-	public void setCity(List city) {
-		this.city = city;
 	}
 	
 	

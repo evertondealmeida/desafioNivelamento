@@ -4,15 +4,12 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-
 import model.State;
-import model.State;
-import persistence.CityDAO;
-import persistence.StateDAO;
+import persistence.StateJPA;
 
 public class StateService {
 	private HashMap<String, State> StateMap;
-	StateDAO dao = new StateDAO();
+	StateJPA stateJPA = new StateJPA();
 
 	public StateService() {
 		StateMap = new HashMap<>();
@@ -21,7 +18,7 @@ public class StateService {
 	public Collection<State> listStates() {
 		try {
 			List<State> vetState;
-			vetState = dao.listState();
+			vetState = stateJPA.listState();
 			for (int i = 0; i < vetState.size(); i++) {
 				State aux = vetState.get(i);
 				StateMap.put(Integer.toString(aux.getCode()), aux);

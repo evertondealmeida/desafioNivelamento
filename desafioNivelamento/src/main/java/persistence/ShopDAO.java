@@ -41,7 +41,7 @@ public class ShopDAO {
 		return vetShop;
 	}
 
-	public void insertShop(Shop Shop) throws SQLException {
+	/*public void insertShop(Shop Shop) throws SQLException {
 		Connection connection = new ConnectionDAO().getConnection();
 		String sql = "INSERT INTO shop VALUES(null,?,?,?,?,?,?)";
 		PreparedStatement sqlInsert = connection.prepareStatement(sql);
@@ -117,5 +117,5 @@ public class ShopDAO {
 		sqlSelect.close();
 		connection.close();
 		return resultado;
-	}
+	}*/
 }

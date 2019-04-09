@@ -11,7 +11,6 @@ import model.ReplyMessage;
 import model.Shop;
 import model.StandardResponse;
 import model.StatusResponse;
-import persistence.CityDAO;
 import persistence.ShopDAO;
 import persistence.ShopJPA;
 import persistence.CityJPA;
@@ -19,7 +18,6 @@ import persistence.CityJPA;
 public class ShopService {
 	private HashMap<String, Shop> ShopMap;
 	ShopDAO dao = new ShopDAO();
-	CityDAO cityDAO = new CityDAO();
 	ShopJPA shopJPA = new ShopJPA();
 	CityJPA cityJPA = new CityJPA();
 	public ShopService() {
@@ -63,7 +61,7 @@ public class ShopService {
 	}
 
 	public String deleteShop(String id) throws NumberFormatException, Exception {
-		if (!dao.checkShop(Integer.parseInt(id)))
+		if (shopJPA.checkShop(Integer.parseInt(id)))
 			return ReplyMessage.IdShopNotExist;
 		//dao.delete(Integer.parseInt(id));
 		shopJPA.delete(Integer.parseInt(id));
@@ -76,12 +74,12 @@ public class ShopService {
 		if (!shop.idNullField(shop))
 			return ReplyMessage.NullFields;
 		shop.setCnpj(shop.onlyNumbers(shop.getCnpj()));
-		if (!dao.checkShop(shop.getId()))
+		if (shopJPA.checkShop(shop.getId()))
 			return ReplyMessage.IdShopNotExist;
 		if (!shop.checkCNPJ(shop))
 			return ReplyMessage.SizeCNPJ;
 		shop.setPhone(shop.onlyNumbers(shop.getPhone()));
-		if (!cityDAO.searchCity(shop.getCodeCity()))
+		if (cityJPA.searchCity(shop.getCodeCity()))
 			return ReplyMessage.IdCityNotExist;
 		ShopMap.put(Integer.toString(shop.getId()), shop);
 		shopJPA.update(shop);
