@@ -1,27 +1,26 @@
 Sqlite3 allShop.db
 
-CREATE TABLE state(
-    code INTEGER PRIMARY KEY AUTOINCREMENT,
-    name varchar(80),
-    uf varchar(2) NOT NULL
+CREATE TABLE State(
+    Code INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name varchar(80),
+    UF varchar(2) NOT NULL
 );
 
-CREATE TABLE city(
-    code INTEGER PRIMARY KEY AUTOINCREMENT,
-    name varchar(80),
-    codeState INTEGER NOT NULL,
-    FOREIGN KEY (codeState) REFERENCES state(code)
+CREATE TABLE City(
+    Code INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name varchar(80),
+    CodeState INTEGER NOT NULL,
+    FOREIGN KEY (CodeState) REFERENCES State (Code)
 );
 
-CREATE TABLE shop(
-	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	name varchar(80) NOT NULL,
-	address varchar(80) NOT NULL,
-	phone varchar(10) NOT NULL,
-	cnpj varchar(14) NOT NULL,
-	workingHour varchar(80) NOT NULL,
-	codeCity INTEGER NOT NULL,
-    FOREIGN KEY (codeCity) REFERENCES city(code)
+CREATE TABLE Shop(
+	Id INTEGER PRIMARY KEY AUTOINCREMENT,
+	Name varchar(80) NOT NULL,
+	Address varchar(80) NOT NULL,
+	Phone varchar(10) NOT NULL,
+	Cnpj varchar(14) NOT NULL,
+	WorkingHour varchar(80) NOT NULL,
+	city_Code INTEGER	
 );
 
 

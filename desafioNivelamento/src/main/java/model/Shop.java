@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -30,8 +33,9 @@ public class Shop {
 	@Column(name = "workingHour")
 	private String workingHour;
 	
-	@Column(name = "codeCity")
-	private Integer codeCity;
+	@ManyToOne
+	@JoinColumn(name="city_Code")
+	private City city;
 
 	public Shop() {
 		super();
@@ -85,18 +89,21 @@ public class Shop {
 		this.workingHour = workingHour;
 	}
 
-	public Integer getCodeCity() {
-		return codeCity;
+	
+	
+
+	public City getCity() {
+		return city;
 	}
 
-	public void setCodeCity(Integer codeCity) {
-		this.codeCity = codeCity;
+	public void setCity(City city) {
+		this.city = city;
 	}
 
 	@Override
 	public String toString() {
 		return "Shop [id=" + id + ", Name=" + name + ", address=" + address + ", phone=" + phone + ", cnpj="
-				+ cnpj + ", workingHour=" + workingHour + ", codeCity=" + codeCity + "]";
+				+ cnpj + ", workingHour=" + workingHour + ", codeCity=" +"]";
 	}
 	
 	public boolean nullFields(Shop Shop) {
@@ -104,8 +111,11 @@ public class Shop {
 			if (Shop.getCnpj() != null && 
 				Shop.getPhone() != null && 
 				Shop.getAddress() != null && 
-				Shop.getName() != null && 
-				Shop.getCodeCity() != null
+				Shop.getName() != null &&
+				Shop.getCity() != null &&
+				Shop.getCity().getCode() != null &&
+				Shop.getCity().getName() != null &&
+				Shop.getCity().getCodeState() != null
 			   ) validFields = true;
 		return validFields;
 	}

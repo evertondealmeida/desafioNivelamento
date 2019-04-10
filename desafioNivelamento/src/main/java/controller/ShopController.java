@@ -46,7 +46,7 @@ public class ShopController {
 		put("/shop/:id", (request, response) -> {
 			response.type("application/json");
 			Shop shop = new Gson().fromJson(request.body(), Shop.class);
-			String helper = ShopService.updateShop(shop);
+			String helper = ShopService.updateShop(shop,request.params(":id"));
 			if (helper.equals(ReplyMessage.Empty))
 				return new Gson()
 						.toJson(new StandardResponse(StatusResponse.SUCCESS, ReplyMessage.ChangedSuccessfully));
@@ -57,12 +57,9 @@ public class ShopController {
 			Shop shop = new Gson().fromJson(request.body(), Shop.class);
 			shop = ShopService.getShop(request.params(":id"));
 
-			if (shop != null) {
-				return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, new Gson().toJsonTree(shop)));
-			} else {
-				return new Gson()
-						.toJson(new StandardResponse(StatusResponse.ERROR, "Esse identificador de loja n�o existe"));
-			}
+			if (shop != null) return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, new Gson().toJsonTree(shop)));
+			return new Gson().toJson(new StandardResponse(StatusResponse.ERROR, ReplyMessage.IdShopNotExist));
+			
 		});
 		CorsFilter.apply();
 
@@ -78,11 +75,11 @@ public class ShopController {
 					new Gson().toJsonTree(cityService.listCity(request.params(":id")))));
 		});
 
-		Spark.get("/search/:state/:city", (request, response) -> {
+		/*Spark.get("/search/:state/:city", (request, response) -> {
 			response.type("application/json");
 			return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,
 					new Gson().toJsonTree(ShopService.listShops(request.params(":state"), request.params(":city")))));
-		});
+		});*/
 
 		Spark.get("/states", (request, response) -> {
 			response.type("application/json");

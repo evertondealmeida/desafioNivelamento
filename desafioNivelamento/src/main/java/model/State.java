@@ -1,23 +1,27 @@
 package model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "state")
+@Table(name = "State")
 public class State {
 	@Id
-	@Column(name = "code")
+	@Column(name = "Code")
 	private int code;
 	
-	@Column(name = "name")
+	@Column(name = "Name")
 	private String name;
 	
-	@Column(name = "uf")
+	@Column(name = "UF")
 	private String uf;
 	
+
 	public State() {
 		super();
 	}
@@ -40,8 +44,12 @@ public class State {
 	public void setUf(String uf) {
 		this.uf = uf;
 	}
+
+
 	
 	
+	
+
 
 	
 }

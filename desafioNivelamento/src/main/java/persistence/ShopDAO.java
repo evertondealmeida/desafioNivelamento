@@ -12,7 +12,7 @@ import model.Shop;
 
 public class ShopDAO {
 
-	public List<Shop> listShop(int codeState, int codeCity) throws SQLException {
+	/*public List<Shop> listShop(int codeState, int codeCity) throws SQLException {
 		List<Shop> vetShop = new ArrayList();
 		Connection connection = new ConnectionDAO().getConnection();
 		String filtro = codeState > 0 ? "state.code = ?" : "state.code > ?";
