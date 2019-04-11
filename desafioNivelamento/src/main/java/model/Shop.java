@@ -114,8 +114,7 @@ public class Shop {
 				Shop.getName() != null &&
 				Shop.getCity() != null &&
 				Shop.getCity().getCode() != null &&
-				Shop.getCity().getName() != null &&
-				Shop.getCity().getCodeState() != null
+				Shop.getCity().getName() != null 
 			   ) validFields = true;
 		return validFields;
 	}

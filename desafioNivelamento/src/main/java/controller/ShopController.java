@@ -2,6 +2,7 @@ package controller;
 
 import static spark.Spark.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import com.google.gson.Gson;
 import model.ReplyMessage;
@@ -75,11 +76,10 @@ public class ShopController {
 					new Gson().toJsonTree(cityService.listCity(request.params(":id")))));
 		});
 
-		/*Spark.get("/search/:state/:city", (request, response) -> {
+		Spark.get("/search/:city", (request, response) -> {
 			response.type("application/json");
-			return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,
-					new Gson().toJsonTree(ShopService.listShops(request.params(":state"), request.params(":city")))));
-		});*/
+			return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,new Gson().toJsonTree(ShopService.listShops(request.params(":city")))));
+		});
 
 		Spark.get("/states", (request, response) -> {
 			response.type("application/json");
@@ -88,9 +88,4 @@ public class ShopController {
 		});
 
 	}
-	/*
-	 * public static String render(Map<String, Object> model, String templatePath) {
-	 * return new MustacheTemplateEngine().render(new ModelAndView(model,
-	 * templatePath)); }
-	 */
 }

@@ -5,15 +5,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+
+import dao.CityDAO;
+import dao.StateDAO;
 import model.City;
 import model.State;
-import persistence.CityJPA;
-import persistence.StateJPA;
 
 public class CityService {
 	private HashMap<String, City> CityMap;
-	CityJPA cityJPA = new CityJPA();
-	StateJPA stateJPA = new StateJPA();
+	CityDAO cityJPA = new CityDAO();
+	StateDAO stateJPA = new StateDAO();
 	State state = new State();
 	public CityService() {
 		CityMap = new HashMap<>();

@@ -9,8 +9,7 @@ CREATE TABLE State(
 CREATE TABLE City(
     Code INTEGER PRIMARY KEY AUTOINCREMENT,
     Name varchar(80),
-    CodeState INTEGER NOT NULL,
-    FOREIGN KEY (CodeState) REFERENCES State (Code)
+    state_Code INTEGER
 );
 
 CREATE TABLE Shop(

@@ -4,12 +4,13 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+
+import dao.StateDAO;
 import model.State;
-import persistence.StateJPA;
 
 public class StateService {
 	private HashMap<String, State> StateMap;
-	StateJPA stateJPA = new StateJPA();
+	StateDAO stateJPA = new StateDAO();
 
 	public StateService() {
 		StateMap = new HashMap<>();

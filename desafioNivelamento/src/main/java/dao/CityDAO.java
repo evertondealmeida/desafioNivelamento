@@ -1,4 +1,4 @@
-package persistence;
+package dao;
 
 
 import java.sql.SQLException;
@@ -10,7 +10,7 @@ import model.City;
 import model.Shop;
 import model.State;
 
-public class CityJPA {
+public class CityDAO {
 
 	public boolean searchCity(Shop shop) throws SQLException {
 		EntityManager em = new JPAUtil().getEntityManager();
@@ -38,12 +38,20 @@ public class CityJPA {
 		List<City> vetCity = new ArrayList();
 		EntityManager em = new JPAUtil().getEntityManager();
 
-		em.getTransaction().begin();
-	    Query query = em.createQuery("FROM City c WHERE c.state = :pState ORDER BY name ASC");
-	    query.setParameter("pState", state);
-	    
-	    vetCity = query.getResultList();
-	    em.getTransaction().commit();
+		em.getTransaction().begin();    
+	    String jpql = "SELECT s FROM State s JOIN FETCH s.city WHERE s.code = :pCodeState";
+		Query query = em.createQuery(jpql);
+		query.setParameter("pCodeState", state.getCode());
+		
+		State getState = (State) query.getSingleResult();
+		
+		for(City allCity : getState.getCity()){
+			City city = new City();
+			city.setCode(allCity.getCode());
+			city.setName(allCity.getName());
+			vetCity.add(city);			
+		};
+		em.getTransaction().commit();
 
 		em.close();
 	    return vetCity;

@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -21,11 +22,12 @@ public class City {
 	@Column(name = "Name")
 	private String name;
 
-	@Column(name = "CodeState")
-	private Integer codeState;
-
 	@OneToMany(mappedBy = "city", fetch = FetchType.LAZY)
 	private List<Shop> shop;
+	
+	@ManyToOne
+	@JoinColumn(name="state_Code")
+	private State state;
 
 
 	public City() {
@@ -53,17 +55,15 @@ public class City {
 	}
 
 
-	public Integer getCodeState() {
-		return codeState;
+	public State getState() {
+		return state;
 	}
 
-	public void setCodeState(Integer codeState) {
-		this.codeState = codeState;
+	public void setState(State state) {
+		this.state = state;
 	}
-
-	public void setShop(List<Shop> shop) {
-		this.shop = shop;
-	}
+	
+	
 	
 	
 

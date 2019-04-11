@@ -72,7 +72,7 @@
         url: 'http://localhost:4567/states',
         success:function(data){
           var States = data;
-          var option = '<option value="0">Selecione o State</option>';
+          var option = '<option value="0">Selecione o Estado</option>';
           for(var i=0; i < States.data.length;i++){
             option += `'<option value="${States.data[i].code}">${States.data[i].name}</option>'`;
           }
@@ -81,45 +81,35 @@
       });
   }
   function carregarCitys(code){
-    carregarLojasState(code);
     if(code != "0"){
         $.ajax({
           url: 'http://localhost:4567/citys/'+code,
           success:function(data){
             var Citys = data;
-            var option = '<option value="">Selecione a City</option>';
+            var option = '<option value="">Selecione a Cidade</option>';
             for(var i=0; i < Citys.data.length;i++){
-              option += `'<option class="${Citys.data[i].codeState}" value="${Citys.data[i].code}">${Citys.data[i].name}</option>'`;
+              option += `'<option class="${code}" value="${Citys.data[i].code}">${Citys.data[i].name}</option>'`;
             }
             $('#cmbCity').html(option).show(); 
           }   
         });
     }else{
-        $('#cmbCity').html('<option value="">Selecione a City</option>');
+        $('#cmbCity').html('<option value="">Selecione a Cidade</option>');
     }
   }
-  function carregarLojasState(code){
-    $('#nenhumaLoja').html("");
-    $('#listarLojas').html("");
-    $.ajax({
-      url: 'http://localhost:4567/search/'+code+'/0',
-      success:function(data){
-        criarCards(data);  
-      }
-    });
-  }
+ 
   $('[name="States"]').change(function(){ 
     carregarCitys($(this).val());
     valorState = $(this).val();
   });
   $('[name="Citys"]').change(function(){
-    carregarLojasCity(valorState,$(this).val());
+    carregarLojasCity($(this).val());
   }); 
-  function carregarLojasCity(codeState,codeCity){
+  function carregarLojasCity(codeCity){
     $('#nenhumaLoja').html("");
     $('#listarLojas').html("");
     $.ajax({
-      url: 'http://localhost:4567/search/'+codeState+'/'+codeCity,
+      url: 'http://localhost:4567/search/'+codeCity,
       success:function(data){
         criarCards(data);
       }

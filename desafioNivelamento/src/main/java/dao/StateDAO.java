@@ -1,4 +1,4 @@
-package persistence;
+package dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +12,7 @@ import javax.persistence.Query;
 import model.Shop;
 import model.State;
 
-public class StateJPA {
+public class StateDAO {
 
 	public List<State> listState() throws SQLException {
 		List<State> vetState = new ArrayList();

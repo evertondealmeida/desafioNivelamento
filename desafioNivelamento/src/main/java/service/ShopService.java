@@ -7,23 +7,20 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
+import dao.CityDAO;
+import dao.ShopDAO;
 import model.ReplyMessage;
 import model.Shop;
 import model.StandardResponse;
 import model.StatusResponse;
-import persistence.ShopDAO;
-import persistence.ShopJPA;
-import persistence.CityJPA;
 
 public class ShopService {
 	private HashMap<String, Shop> ShopMap;
-	ShopDAO dao = new ShopDAO();
-	ShopJPA shopJPA = new ShopJPA();
-	CityJPA cityJPA = new CityJPA();
+	ShopDAO shopJPA = new ShopDAO();
+	CityDAO cityJPA = new CityDAO();
 	public ShopService() {
 		ShopMap = new HashMap<>();
 	}
-	//Testado OK
 	public String insertShop(Shop shop) throws SQLException {
 		if (!shop.nullFields(shop))return ReplyMessage.NullFields;
 		
@@ -38,7 +35,6 @@ public class ShopService {
 		return ReplyMessage.Empty;
 	}
 	
-	//Testado OK
 	public Shop getShop(String id) throws NumberFormatException, Exception {
 		Shop shop = new Shop();
 		shop = shopJPA.getShop(Integer.parseInt(id));
@@ -48,21 +44,20 @@ public class ShopService {
 		return ShopMap.get(id);
 	}
 
-	/*public Collection<Shop> listShops(String codeState, String codeCity) throws SQLException {
+	public Collection<Shop> listShops(String codeCity) throws SQLException {
 		ShopMap.clear();
-		codeState = codeState != null ? codeState : "0";
 		codeCity = codeCity != null ? codeCity : "0";
 		List<Shop> vetShop;
-		vetShop = dao.listShop(Integer.parseInt(codeState), Integer.parseInt(codeCity));
+		vetShop = shopJPA.listShop(Integer.parseInt(codeCity));
+		if(vetShop.equals(null))return null;
 		for (int i = 0; i < vetShop.size(); i++) {
 			Shop aux = vetShop.get(i);
 			ShopMap.put(Integer.toString(aux.getId()), aux);
 		}
 		return ShopMap.values();
-	}*/
+	}
 
 
-	//Testado OK
 	public String deleteShop(String id) throws NumberFormatException, Exception {
 		if (shopJPA.checkShop(Integer.parseInt(id)))
 			return ReplyMessage.IdShopNotExist;
@@ -71,7 +66,6 @@ public class ShopService {
 		return ReplyMessage.Empty;
 	}
 
-	//Testado OK
 	public String updateShop(Shop shop,String id) throws Exception {
 		if (shopJPA.checkShop(Integer.parseInt(id))) return ReplyMessage.IdShopNotExist;
 		shop.setId(Integer.parseInt(id));
