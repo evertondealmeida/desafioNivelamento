@@ -47,8 +47,7 @@ public class ShopService {
 	public Collection<Shop> listShops(String codeCity) throws SQLException {
 		ShopMap.clear();
 		codeCity = codeCity != null ? codeCity : "0";
-		List<Shop> vetShop;
-		vetShop = shopJPA.listShop(Integer.parseInt(codeCity));
+		List<Shop> vetShop = shopJPA.listShop(Integer.parseInt(codeCity));
 		if(vetShop.equals(null))return null;
 		for (int i = 0; i < vetShop.size(); i++) {
 			Shop aux = vetShop.get(i);

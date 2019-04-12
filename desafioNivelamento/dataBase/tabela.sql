@@ -22,5 +22,14 @@ CREATE TABLE Shop(
 	city_Code INTEGER	
 );
 
+CREATE TABLE Log(
+	Id INTEGER PRIMARY KEY AUTOINCREMENT,
+	Local varchar(80) NOT NULL,
+	TypeMessage varchar(80) NOT NULL,
+	Description varchar(80) NOT NULL,
+	DateLog varchar(10) NOT NULL
+);
+
+
 
 

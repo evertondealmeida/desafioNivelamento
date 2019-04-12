@@ -24,9 +24,7 @@ public class CityService {
 		CityMap.clear();
 		try {
 			List<City> vetCity = new ArrayList();
-			
-			state = stateJPA.getState(Integer.parseInt(code));
-			vetCity = cityJPA.listCity(state);
+			vetCity = cityJPA.listCity(Integer.parseInt(code));
 			for (int i = 0; i < vetCity.size(); i++) {
 				City aux = vetCity.get(i);
 				CityMap.put(Integer.toString(aux.getCode()), aux);

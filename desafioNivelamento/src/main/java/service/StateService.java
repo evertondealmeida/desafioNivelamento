@@ -19,9 +19,10 @@ public class StateService {
 	public Collection<State> listStates() {
 		try {
 			List<State> vetState;
-			vetState = stateJPA.listState();
-			for (int i = 0; i < vetState.size(); i++) {
+			vetState = stateJPA.listState();	
+			for (int i = 0; i < vetState.size(); i++) {			
 				State aux = vetState.get(i);
+				aux.setCity(null);
 				StateMap.put(Integer.toString(aux.getCode()), aux);
 			}
 		} catch (SQLException e) {
