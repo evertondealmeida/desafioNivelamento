@@ -2,13 +2,13 @@ package model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "Log")
@@ -29,6 +29,9 @@ public class Log {
 	
 	@Column(name = "DateLog")
 	private String dateLog;
+	
+	@Transient
+	private String lineColor;
 
 	
 	public Log() {
@@ -75,6 +78,16 @@ public class Log {
 		this.dateLog = dateLog;
 	}
 	
+	
+	
+	public String getLineColor() {
+		return lineColor;
+	}
+
+	public void setLineColor(String lineColor) {
+		this.lineColor = lineColor;
+	}
+
 	public void DateFormated() {	
 		SimpleDateFormat out = new SimpleDateFormat("yyyy-MM-dd");		   
 		setDateLog(out.format(new Date()));	

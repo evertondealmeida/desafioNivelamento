@@ -1,25 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-	<link rel="stylesheet" href="./css/style.css" type="text/css">
+<meta charset="UTF-8">
+<title>Tabela de logs</title>
+	<link rel="stylesheet" href="../css/style.css" type="text/css">
 </head>
 <body>
 	<table id="tableLog">
-		<caption>Tabela de LOGs</caption>
+		<h1>Tabela de LOGs</h1>
 		<thead>
 			<tr>
 				<th>Local</th>
-				<th>Mensagem</th>
+				<th>Tipo de Mensagem</th>
+				<th>Descrição</th>
+				<th>Data do log</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>Hide You</td>
-				<td>Kosheen</td>
-
+				{{#listLog}}
+			<tr class={{lineColor}}>
+					<td>{{local}}</td>
+					<td>{{typeMessage}}</td>
+					<td>{{description}}</td>
+					<td>{{dateLog}}</td>
+			
 			</tr>
+			{{/listLog}}
 		</tbody>
 	</table>
 </body>

@@ -16,8 +16,7 @@ public class StateService {
 		StateMap = new HashMap<>();
 	}
 
-	public Collection<State> listStates() {
-		try {
+	public Collection<State> listStates() throws SQLException {
 			List<State> vetState;
 			vetState = stateJPA.listState();	
 			for (int i = 0; i < vetState.size(); i++) {			
@@ -25,10 +24,6 @@ public class StateService {
 				aux.setCity(null);
 				StateMap.put(Integer.toString(aux.getCode()), aux);
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return StateMap.values();
 	}
 }

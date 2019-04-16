@@ -27,18 +27,15 @@ public class LogService {
 		log.DateFormated();
 		logJPA.insertLog(log);
 	}
-	public Collection<Log> listStates() {
-		try {
+	public Collection<Log> listLog() throws SQLException {
 			List<Log> vetLog;
 			vetLog = logJPA.listLog();	
 			for (int i = 0; i < vetLog.size(); i++) {			
 				Log aux = vetLog.get(i);
+		
+				aux.setLineColor(aux.getTypeMessage().equals("Sucesso")? "green": (aux.getTypeMessage().equals("Erro")? "red":"black"));
 				LogMap.put(Integer.toString(aux.getId()), aux);
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return LogMap.values();
 	}
 }

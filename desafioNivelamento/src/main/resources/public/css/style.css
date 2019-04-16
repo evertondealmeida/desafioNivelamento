@@ -1,31 +1,35 @@
-body {
-  font: 75%/1.6 "Myriad Pro", Frutiger, "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", Verdana, sans-serif;
-}
+
 table {
   border-collapse: collapse;
-  width: 50em;
-  border: 1px solid #666;
+  width: 100%;
 }
-thead {
-  background: #ccc url(https://www.devfuria.com.br/html-css/tabelas/bar.gif) repeat-x left center;
-  border-top: 1px solid #a5a5a5;
-  border-bottom: 1px solid #a5a5a5;
+
+h1 {
+  text-align: Center;
 }
-tr:hover {
-  background-color:#3d80df;
-  color: #fff;
+table thead{
+  background-color: #666666;
 }
-thead tr:hover {
-  background-color: transparent;
-  color: inherit;
-}
-tr:nth-child(even) {
-    background-color: #edf5ff;
-}
-th {
-  font-weight: normal;
-  text-align: left;
-}
+
 th, td {
-  padding: 0.1em 1em;
+  text-align: Center;
+  padding: 8px;
 }
+
+tr.green {
+	background-color: #2EFE2E;
+	color: #FFFFFF;
+}
+
+tr.red {
+	background-color: #FF0000;
+	color: #FFFFFF;
+}
+
+tr.black {
+	background-color: #000000;
+	color: #FFFFFF;
+}
+
+
+

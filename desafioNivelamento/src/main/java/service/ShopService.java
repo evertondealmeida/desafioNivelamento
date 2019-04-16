@@ -4,15 +4,10 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-
-import com.google.gson.Gson;
-
 import dao.CityDAO;
 import dao.ShopDAO;
 import model.ReplyMessage;
 import model.Shop;
-import model.StandardResponse;
-import model.StatusResponse;
 
 public class ShopService {
 	private HashMap<String, Shop> ShopMap;
@@ -21,18 +16,25 @@ public class ShopService {
 	public ShopService() {
 		ShopMap = new HashMap<>();
 	}
-	public String insertShop(Shop shop) throws SQLException {
-		if (!shop.nullFields(shop))return ReplyMessage.NullFields;
+	
+	public String insertShop(Shop shop) {
+		try {
+			if (!shop.nullFields(shop))return ReplyMessage.NullFields;
 		
-		shop.setCnpj(shop.onlyNumbers(shop.getCnpj()));
-		if (!shop.checkCNPJ(shop))return ReplyMessage.SizeCNPJ;
+			shop.setCnpj(shop.onlyNumbers(shop.getCnpj()));
+			if (!shop.checkCNPJ(shop))return ReplyMessage.SizeCNPJ;
 		
-		shop.setPhone(shop.onlyNumbers(shop.getPhone()));
-		if (cityJPA.searchCity(shop))return ReplyMessage.IdCityNotExist;
+			shop.setPhone(shop.onlyNumbers(shop.getPhone()));
+			if (cityJPA.searchCity(shop))return ReplyMessage.IdCityNotExist;
 		
-		shopJPA.insertShop(shop);
-		ShopMap.put(Integer.toString(shop.getId()), shop);
-		return ReplyMessage.Empty;
+			shopJPA.insertShop(shop);
+			ShopMap.put(Integer.toString(shop.getId()), shop);
+		
+		}catch(Exception e) {
+			return ReplyMessage.DataBaseError;
+		}
+		return ReplyMessage.InsertedSuccessfully;
+		
 	}
 	
 	public Shop getShop(String id) throws NumberFormatException, Exception {
@@ -42,6 +44,17 @@ public class ShopService {
 		shop.setCity(null);		
 		ShopMap.put(Integer.toString(shop.getId()), shop);
 		return ShopMap.get(id);
+	}
+	
+	public String deleteShop(String id) {
+		try {
+			if (shopJPA.checkShop(Integer.parseInt(id))) return ReplyMessage.IdShopNotExist;
+			shopJPA.delete(Integer.parseInt(id));	
+		    ShopMap.remove(id);
+		    return ReplyMessage.DeletedSuccessfully;
+		}catch(Exception e) {
+			return ReplyMessage.DataBaseError;
+		}	
 	}
 
 	public Collection<Shop> listShops(String codeCity) throws SQLException {
@@ -56,32 +69,25 @@ public class ShopService {
 		return ShopMap.values();
 	}
 
-
-	public String deleteShop(String id) throws NumberFormatException, Exception {
-		if (shopJPA.checkShop(Integer.parseInt(id)))
-			return ReplyMessage.IdShopNotExist;
-		shopJPA.delete(Integer.parseInt(id));	
-		ShopMap.remove(id);
-		return ReplyMessage.Empty;
-	}
-
-	public String updateShop(Shop shop,String id) throws Exception {
-		if (shopJPA.checkShop(Integer.parseInt(id))) return ReplyMessage.IdShopNotExist;
-		shop.setId(Integer.parseInt(id));
+	public String updateShop(Shop shop,String id){
+		try {
+			if (shopJPA.checkShop(Integer.parseInt(id))) return ReplyMessage.IdShopNotExist;
+			shop.setId(Integer.parseInt(id));
 		
-		if (!shop.idNullField(shop))return ReplyMessage.NullFields;
+			if (!shop.idNullField(shop))return ReplyMessage.NullFields;
 		
-		shop.setCnpj(shop.onlyNumbers(shop.getCnpj()));
+			shop.setCnpj(shop.onlyNumbers(shop.getCnpj()));
+			if (!shop.checkCNPJ(shop))return ReplyMessage.SizeCNPJ;
 		
-		if (!shop.checkCNPJ(shop))return ReplyMessage.SizeCNPJ;
+			shop.setPhone(shop.onlyNumbers(shop.getPhone()));
+			if (cityJPA.searchCity(shop))return ReplyMessage.IdCityNotExist;
 		
-		shop.setPhone(shop.onlyNumbers(shop.getPhone()));
-		
-		if (cityJPA.searchCity(shop))return ReplyMessage.IdCityNotExist;
-		
-		ShopMap.put(Integer.toString(shop.getId()), shop);
-		shopJPA.update(shop);
-		return ReplyMessage.Empty;
+			ShopMap.put(Integer.toString(shop.getId()), shop);
+			shopJPA.update(shop);
+		}catch(Exception e) {
+			return ReplyMessage.DataBaseError;
+		}
+		return ReplyMessage.ChangedSuccessfully;
 	}
 
 }
