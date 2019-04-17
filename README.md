@@ -17,14 +17,19 @@ Informações:
 Inserir:
     
     *Aceita JSON via POST;
+    
     *Exemplo de entrada:
           {
-            "nome": "Teste",
-            "endereco": "Rua Abc, 000",
-            "telefone": "(53)3233-1318",
-            "cnpj": "098.765.432/109-8",
-            "horarioAtendimento": "Diariamente das 11hs às 23hs",
-            "codigoCidade": 4314407
+              "name": "Compasso",
+              "address": "Rua b, 171",
+              "phone": "(53)3230-1013",
+              "cnpj": "09876543210919",
+              "workingHour": "Diariamente das 11hs às 23hs",
+              "city": {		
+                "code": 5300108,
+                "name": "Brasilia",
+                "codeState": 53
+               }
           }
 Editar:  
     
@@ -34,21 +39,38 @@ Excluir:
     
     *Aceita ID de uma loja via DELETE;
     
-Listar lojas por Estado:
-    
-    *Aceita código do IBGE do Estado via GET;
-    
 Listar lojas por Cidade:
     
-    *Aceita código do IBGE do Estado / o código do IBGE da Cidade via GET;
+    *Aceita o código do IBGE da Cidade via GET;
     
 Listar dados de uma loja:
     
     *Aceita ID de uma loja via GET;
 
+Listar Estados:
+
+    *Somente a chamada dos Estados por GET;
+
+Listar Cidades por Estado:
+
+    *Aceita o código do IBGE do Estado via GET;
+
+Listar Log:
+
+    *Somente a chamada dos Logs por GET;
+    
+   
+
 # Front:
 
-Para abrir a página html:
+Para abrir a página html de lojas:
   
     *Entra na pasta Front do projeto;
-    *Dentro da pasta clique em index.html
+    *Dentro da pasta clique em index.html;
+
+# Log:
+    
+    *Conforme especificações pode ser ordenado por qualquer coluna da tabela; 
+
+    *As linhas que indiquem erros na aplicação devem ser vermelhas, as de sucesso verdes e as de informação pretas. 
+
