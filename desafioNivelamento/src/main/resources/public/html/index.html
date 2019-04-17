@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>Tabela de logs</title>
+	<meta charset="UTF-8">
+	<title>Tabela de logs</title>
 	<link rel="stylesheet" href="../css/style.css" type="text/css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 	<table id="tableLog">
 		<h1>Tabela de LOGs</h1>
 		<thead>
 			<tr>
-				<th>Local</th>
-				<th>Tipo de Mensagem</th>
-				<th>Descrição</th>
-				<th>Data do log</th>
+				<th><span onclick="order(0)"> Local <i class="fa fa-caret-down" ></i></span></th>
+				<th><span onclick="order(1)"> Tipo de Mensagem <i class="fa fa-caret-down" ></i></span></th>
+				<th><span onclick="order(2)"> Descrição <i class="fa fa-caret-down" ></i></span></th>
+				<th><span onclick="order(3)"> Data do log <i class="fa fa-caret-down" ></i></span></th>
 			</tr>
 		</thead>
-		<tbody>
-				{{#listLog}}
+		<tbody id="consultbory">
+							
+			{{#listLog}}
 			<tr class={{lineColor}}>
-					<td>{{local}}</td>
-					<td>{{typeMessage}}</td>
-					<td>{{description}}</td>
-					<td>{{dateLog}}</td>
-			
+				<td>{{local}}</td>
+				<td>{{typeMessage}}</td>
+				<td>{{description}}</td>
+				<td>{{dateLog}}</td>
 			</tr>
 			{{/listLog}}
+			
 		</tbody>
 	</table>
+	<script src="../vendor/jquery/jquery.min.js"></script> 
+	<script type="text/javascript" src="../javascript/script.js"></script>  
 </body>
 </html>
