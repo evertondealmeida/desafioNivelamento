@@ -19,18 +19,17 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nome\": \"Renner\",\r\n    \"endereco\": \"Rua b, 171\",\r\n    \"telefone\": \"(53)3230-1013\",\r\n    \"cnpj\": \"098.765.432/109-18\",\r\n    \"horarioAtendimento\": \"Diariamente das 11hs às 23hs\",\r\n    \"codigoCidade\": 4314407\r\n}"
+					"raw": "{\r\n    \"name\": \"Compasso\",\r\n    \"address\": \"Rua b, 171\",\r\n    \"phone\": \"(53)3230-1013\",\r\n    \"cnpj\": \"09876543210919\",\r\n    \"workingHour\": \"Diariamente das 11hs às 23hs\",\r\n    \"city\": {\t\t\r\n    \t\"code\": 5300108,\r\n    \t\"name\": \"Brasilia\",\r\n    \t\"codeState\": 53\r\n    }\r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://localhost:4567/Lojas/Inserir",
+					"raw": "http://localhost:4567/shop",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "4567",
 					"path": [
-						"Lojas",
-						"Inserir"
+						"shop"
 					]
 				}
 			},
@@ -46,16 +45,15 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:4567/Lojas/Excluir/2",
+					"raw": "http://localhost:4567/shop/10",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "4567",
 					"path": [
-						"Lojas",
-						"Excluir",
-						"2"
+						"shop",
+						"10"
 					]
 				}
 			},
@@ -75,19 +73,18 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\t\"id\":2,\r\n    \"nome\": \"Renner 24\",\r\n    \"endereco\": \"Rua b, 171\",\r\n    \"telefone\": \"(53)3230-1013\",\r\n    \"cnpj\": \"098.765.432/109-18\",\r\n    \"horarioAtendimento\": \"Diariamente das 11hs às 23hs\",\r\n    \"codigoCidade\": 4314407\r\n}"
+					"raw": "{\r\n    \"name\": \"RCA\",\r\n    \"address\": \"Rua b, 171\",\r\n    \"phone\": \"(53)3230-1013\",\r\n    \"cnpj\": \"09876543210911\",\r\n    \"workingHour\": \"Diariamente das 08hs às 18hs\",\r\n    \"city\": {\t\t\r\n    \t\"code\": 4314407,\r\n    \t\"name\": \"Pelotas\",\r\n    \t\"codeState\": 43\r\n    }\r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://localhost:4567/Lojas/Editar/2",
+					"raw": "http://localhost:4567/shop/3",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "4567",
 					"path": [
-						"Lojas",
-						"Editar",
-						"2"
+						"shop",
+						"3"
 					]
 				}
 			},
@@ -103,23 +100,22 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:4567/Lojas/ObterLoja/1",
+					"raw": "http://localhost:4567/getShop/3",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "4567",
 					"path": [
-						"Lojas",
-						"ObterLoja",
-						"1"
+						"getShop",
+						"3"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Listar Lojas por Estado",
+			"name": "Listar Lojas por Cidade",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -128,24 +124,22 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:4567/Lojas/Procurar/43/0",
+					"raw": "http://localhost:4567/search/431440",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "4567",
 					"path": [
-						"Lojas",
-						"Procurar",
-						"43",
-						"0"
+						"search",
+						"431440"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Listar Lojas Por Estado e Cidade",
+			"name": "Listar Estados",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -154,18 +148,46 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:4567/Lojas/Procurar/43/4315602",
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Cidades",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:4567/citys/43",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "4567",
 					"path": [
-						"Lojas",
-						"Procurar",
-						"43",
-						"4315602"
+						"citys",
+						"43"
 					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Log",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
 				}
 			},
 			"response": []
