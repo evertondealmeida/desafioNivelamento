@@ -47,7 +47,7 @@ public class ShopController {
 				response.type("application/json");
 				Shop shop = new Gson().fromJson(request.body(), Shop.class);
 				shop = ShopService.getShop(request.params(":id"));
-				String helper = shop != null? ReplyMessage.ReturnsListSuccessfully : ReplyMessage.IdShopNotExist;
+				String helper = shop != null? ReplyMessage.SeeSuccessfully : ReplyMessage.IdShopNotExist;
 				StatusResponse status = shop != null? StatusResponse.NOTE : StatusResponse.ERROR;	
 				logService.insertLog("/getShop/" + request.params(":id"), status.getStatus(),helper);
 				return shop != null? 
@@ -106,7 +106,7 @@ public class ShopController {
 			response.type("application/json");
 			try {
 				Collection<Shop> shops = ShopService.listShops(request.params(":city"));
-				String helper = shops != null? ReplyMessage.ReturnsListSuccessfully : ReplyMessage.IdShopNotExist;
+				String helper = shops != null? ReplyMessage.ReturnsListSuccessfully : ReplyMessage.IdStateNotExist;
 				StatusResponse status = helper.equals(ReplyMessage.ReturnsListSuccessfully)? StatusResponse.NOTE : StatusResponse.ERROR;
 				logService.insertLog("/search/" + request.params(":city"), status.getStatus(),helper);
 				return shops != null? 

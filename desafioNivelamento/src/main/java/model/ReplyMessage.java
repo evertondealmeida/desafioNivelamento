@@ -4,6 +4,8 @@ public class ReplyMessage {
 	public final static String InsertedSuccessfully = "Loja inserida com sucesso";
 	public final static String ChangedSuccessfully = "Loja alterada com sucesso";
 	public final static String DeletedSuccessfully = "Loja deletada com sucesso";
+	public final static String SeeSuccessfully = "Loja retornada com sucesso";
+	public final static String IdStateNotExist = "Esse identificador de estado não existe";
 	public final static String IdCityNotExist = "Esse identificador de cidade não existe";
 	public final static String IdShopNotExist = "Esse identificador de loja não existe";
 	public final static String StateNotExist = "Não existe estados cadastrados";
