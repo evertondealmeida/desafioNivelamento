@@ -1,0 +1,314 @@
+swagger: '2.0'
+
+schemes:
+  - http
+  - https
+
+host: localhost:4567
+basePath: /
+
+info:
+  version: 1.0.0
+  title: Desafio Nivelamento
+  description: Check which stores are installed in the city.
+
+consumes:
+  - application/json
+produces:
+  - application/json
+
+tags:
+  - name: State
+  - name: City
+  - name: Log
+  - name: shop
+
+paths:
+  '/shop':
+    post:
+      tags:
+        - shop
+      summary: Shop Registration
+      description: New store
+      operationId: insertShop
+      parameters:
+        - in: body
+          name: shop_
+          schema:
+            $ref: '#/definitions/shop'
+          required: true
+      responses:
+        201:
+          description: Loja inserida com sucesso
+          schema:
+            $ref: '#/definitions/shop'
+        203:
+          description: Não é possível inserir campos nulos
+        404:
+          description: Essa rota não existe
+        500:
+          description: Erro com o banco de dados
+          
+  '/search/{codeCity}':
+    get:
+      tags:
+        - shop
+      summary: List store
+      description: List stores by city
+      operationId: listShops
+      parameters:
+        - in: path
+          name: codeCity
+          type: integer
+          format: int64
+          required: true
+          
+      responses:
+        200:
+          description: Lista retornada com sucesso
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/shop'
+        203:
+          description: Esse identificador de cidade não existe
+      
+        404:
+          description: Essa rota não existe
+        500:
+          description: Erro com o banco de dados
+  '/shop/{id}':
+    delete:
+      tags:
+        - shop
+      summary: Store deleted
+      description: Deleted store by id
+      operationId: deleteShop
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          format: int64
+          required: true
+        - in: body
+          name: shop_
+          schema:
+            $ref: '#/definitions/shop'
+      responses:
+        203:
+          description: Esse identificador de loja não existe
+        204:
+          description: Loja deletada com sucesso
+      
+        404:
+          description: Essa rota não existe
+        500:
+          description: Erro com o banco de dados
+    put:
+      tags:
+        - shop
+      summary: Shop edit
+      description: Edit store by id
+      operationId: updateShop
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          format: int64
+          required: true
+        - in: body
+          name: shop_
+          schema:
+            $ref: '#/definitions/shop'
+      responses:
+        203:
+          description: Esse identificador de loja não existe
+        204:
+          description: Loja alterada com sucesso
+      
+        404:
+          description: Essa rota não existe
+        500:
+          description: Erro com o banco de dados
+  '/getShop/{id}':
+    get:
+      tags:
+        - shop
+      summary: See store
+      description: See stores by city
+      operationId: getShop
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          format: int64
+          required: true
+          
+      responses:
+        200:
+          description: Loja retornada com sucesso
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/shop'
+        203:
+          description: Esse identificador de loja não existe
+      
+        404:
+          description: Essa rota não existe
+        500:
+          description: Erro com o banco de dados
+  '/states':
+    get:
+      tags:
+        - State
+      summary: List state
+      description: List of all states 
+      operationId: listStates
+      responses:
+        200:
+          description: Lista retornada com sucesso
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/state'
+        404:
+          description: Essa rota não existe
+        500:
+          description: Erro com o banco de dados
+  '/citys/id':
+    get:
+      tags:
+        - City
+      summary: List city
+      description: List city by state
+      operationId: listCity
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          format: int64
+          required: true
+          
+      responses:
+        200:
+          description: Lista retornada com sucesso
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/city'
+        203:
+          description: Esse identificador de estado não existe
+      
+        404:
+          description: Essa rota não existe
+        500:
+          description: Erro com o banco de dados
+  '/log':
+    get:
+      tags:
+        - Log
+      summary: List log
+      description: List of all log 
+      operationId: listLog
+      responses:
+        200:
+          description: Lista retornada com sucesso
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/log'
+        404:
+          description: Essa rota não existe
+        500:
+          description: Erro com o banco de dados    
+
+
+definitions:
+
+  state:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int64
+        example: 53
+      name:
+        type: string
+        example: Brasília
+        
+      uf:
+        type: string
+        maxLength: 2
+        minLength: 2
+        example: DF
+      city:
+        type: array
+        items:
+          $ref: '#/definitions/city'
+      
+
+  city:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int64
+        example: 5300108
+      name:
+        type: string
+        example: Brasília
+        
+      shop:
+        type: array
+        items:
+          $ref: '#/definitions/shop'
+      state:
+        $ref: '#/definitions/state'
+      
+  
+  shop:
+    type: object
+    properties:
+      name:
+        type: string
+        example: Compasso
+      address:
+        type: string
+        example: Av. Tiradentes, 456
+      phone:
+        type: string
+        maxLength: 11
+        minLength: 11
+        example: 53984175075
+      cnpj:
+        type: string
+        maxLength: 14
+        minLength: 14
+        example: 12345678909876
+      workingHour:
+        type: string
+        example: Diariamente das 11hs às 23hs
+      
+      city:
+        $ref: '#/definitions/city'
+  log:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        example: 1
+      local:
+        type: string
+        example: /shop
+      typeMessage:
+        type: string
+        example: Sucesso
+      description:
+        type: string
+        example: Loja alterada com sucesso
+      datelog:
+        type: string
+        example: 2019-04-22
+        
